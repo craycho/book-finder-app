@@ -1,35 +1,19 @@
 import { useEffect, useState } from "react";
+import { useSearchParams, redirect } from "react-router-dom";
 
 import styles from "./SearchBar.module.css";
 
 const API_KEY = "AIzaSyB6EzRjXUNpB23ivuekvxOAyzpnBu0aaRk";
-const searchTerm = "dragon";
-
-let isInitial = true;
+const searchTerm = "";
 
 function SearchBar(props) {
   const [searchQuery, setSearchQuery] = useState("");
-
-  /**@todo Ne radi kada se pritisne back, rezultati se svakako displayayu. */
-  /*  useEffect(() => {
-    if (props.searchMode === "title") {
-      setUrl(
-        `https://www.googleapis.com/books/v1/volumes?&printType=books&q=${searchTerm}+intitle:${searchQuery}&key=${API_KEY}`
-      );
-    } else if (props.searchMode === "author") {
-      setUrl(
-        `https://www.googleapis.com/books/v1/volumes?&printType=books&q=${searchTerm}+inauthor:${searchQuery}&key=${API_KEY}`
-      );
-    } else if (props.searchMode === "subject") {
-      setUrl(
-        `https://www.googleapis.com/books/v1/volumes?&printType=books&q=${searchTerm}+subject:${searchQuery}&key=${API_KEY}`
-      );
-    } else return;
-  }, [searchQuery]); */
+  const [isInitial, setIsInitial] = useState(true);
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     if (isInitial) {
-      isInitial = false;
+      setIsInitial(false);
       return;
     }
 
@@ -41,9 +25,12 @@ function SearchBar(props) {
         : "subject"
     }:${searchQuery}&key=${API_KEY}`;
 
+    /**@todo Fuck around with startIndex=10 etc to implement pagination */
+
     const searchBooks = async function () {
       const response = await fetch(url);
       const resData = await response.json();
+      // console.log(resData);
 
       // Displaying results
       const bookResults = resData.items.map((res) => {
@@ -65,7 +52,7 @@ function SearchBar(props) {
 
   return (
     <form className={styles.form} onSubmit={submitHandler}>
-      <label htmlFor="book-search">Search by {"Sth"}</label>
+      <label htmlFor="book-search">Search by {props.searchMode}</label>
       <br />
       <input type="search" name="book-search" id="book-search" />
     </form>

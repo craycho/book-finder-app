@@ -6,36 +6,50 @@ import SearchMenu from "./SearchMenu";
 import SearchBar from "./SearchBar";
 
 const API_KEY = "AIzaSyB6EzRjXUNpB23ivuekvxOAyzpnBu0aaRk";
-const searchTerm = "dragon";
+const searchTerm = "";
+
 let isInitial = true;
 
 function Home() {
   const [books, setBooks] = useState([]);
-
+  const [searchMode, setSearchMode] = useState(undefined);
   const [searchParams] = useSearchParams();
-  const [searchMode, setSearchMode] = useState("");
 
+  // Checks if params exist/runs when changed
   useEffect(() => {
     if (isInitial) {
       isInitial = false;
       return;
     }
 
-    setSearchMode(searchParams.get("search"));
-  }, [searchParams]);
+    if ([...searchParams].length !== 0) {
+      setSearchMode(searchParams.get("search"));
+    } else {
+      setSearchMode(undefined);
+      setBooks([]); // Hides results on return to menu
+    }
+  }, [searchParams, setSearchMode]);
 
   function bookResultsHandler(results) {
     setBooks(results);
+  }
+
+  function showSearchMenu() {
+    setSearchMode(undefined);
   }
 
   return (
     <div className="App">
       <header className={styles["hero-header"]}>
         <h1>Book Buddy</h1>
-        {searchMode === "" ? (
-          <SearchMenu />
+        {searchMode ? (
+          <SearchBar
+            searchMode={searchMode}
+            onSearch={bookResultsHandler}
+            onNavigate={showSearchMenu}
+          />
         ) : (
-          <SearchBar searchMode={searchMode} onSearch={bookResultsHandler} />
+          <SearchMenu />
         )}
 
         {books.length > 0 && (
