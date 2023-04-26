@@ -1,12 +1,9 @@
 import { useSearchParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import styles from "./Home.module.css";
 import SearchMenu from "./SearchMenu";
 import SearchBar from "./SearchBar";
-
-const API_KEY = "AIzaSyB6EzRjXUNpB23ivuekvxOAyzpnBu0aaRk";
-const searchTerm = "";
 
 let isInitial = true;
 
@@ -30,9 +27,9 @@ function Home() {
     }
   }, [searchParams, setSearchMode]);
 
-  function bookResultsHandler(results) {
+  const bookResultsHandler = useCallback((results) => {
     setBooks(results);
-  }
+  }, []);
 
   function showSearchMenu() {
     setSearchMode(undefined);

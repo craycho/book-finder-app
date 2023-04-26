@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useSearchParams, redirect } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
 import styles from "./SearchBar.module.css";
 
@@ -8,42 +7,43 @@ const searchTerm = "";
 
 function SearchBar(props) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [isInitial, setIsInitial] = useState(true);
-  const [searchParams] = useSearchParams();
+  const isMounted = useRef(false);
+  // const [isInitial, setIsInitial] = useState(true);
+  const { searchMode, onSearch } = props;
 
   useEffect(() => {
-    if (isInitial) {
-      setIsInitial(false);
-      return;
+    console.log(isMounted);
+    if (isMounted.current) {
+      const url = `https://www.googleapis.com/books/v1/volumes?&printType=books&q=${searchTerm}+${
+        searchMode === "title"
+          ? "intitle"
+          : searchMode === "author"
+          ? "inauthor"
+          : "subject"
+      }:${searchQuery}&key=${API_KEY}`;
+
+      /**@todo Fuck around with startIndex=10 etc to implement pagination */
+
+      const searchBooks = async function () {
+        const response = await fetch(url);
+        const resData = await response.json();
+        // console.log(resData);
+
+        // Displaying results
+        const bookResults = resData.items.map((res) => {
+          return {
+            id: res.id,
+            info: res.volumeInfo,
+          };
+        });
+        onSearch([...bookResults]);
+      };
+
+      searchBooks();
+    } else {
+      isMounted.current = true;
     }
-
-    const url = `https://www.googleapis.com/books/v1/volumes?&printType=books&q=${searchTerm}+${
-      props.searchMode === "title"
-        ? "intitle"
-        : props.searchMode === "author"
-        ? "inauthor"
-        : "subject"
-    }:${searchQuery}&key=${API_KEY}`;
-
-    /**@todo Fuck around with startIndex=10 etc to implement pagination */
-
-    const searchBooks = async function () {
-      const response = await fetch(url);
-      const resData = await response.json();
-      // console.log(resData);
-
-      // Displaying results
-      const bookResults = resData.items.map((res) => {
-        return {
-          id: res.id,
-          info: res.volumeInfo,
-        };
-      });
-      props.onSearch([...bookResults]);
-    };
-
-    searchBooks();
-  }, [searchQuery]);
+  }, [searchQuery, searchMode, onSearch, isMounted]); // Daje warning jer nema isInitial
 
   function submitHandler(event) {
     event.preventDefault();
