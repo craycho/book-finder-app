@@ -1,21 +1,24 @@
 import { Link, useSearchParams } from "react-router-dom";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import styles from "./Home.module.css";
 import SearchMenu from "./SearchMenu";
-import SearchBar from "./SearchBar";
+import Search from "./Search";
 
 let isInitial = true;
 
 function Home() {
-  const [books, setBooks] = useState([]);
+  const [books, setBooks] = useState();
   const [searchMode, setSearchMode] = useState(undefined);
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  console.log(books);
 
   // Checks if params exist/runs when changed
   useEffect(() => {
     if (isInitial) {
       isInitial = false;
+      setSearchParams(""); // Removes searchParams on page reload
       return;
     }
 
@@ -23,7 +26,7 @@ function Home() {
       setSearchMode(searchParams.get("search"));
     } else {
       setSearchMode(undefined);
-      setBooks([]); // Hides results on return to menu
+      setBooks(undefined); // Hides results on return to menu
     }
   }, [searchParams, setSearchMode]);
 
@@ -31,32 +34,27 @@ function Home() {
     setBooks(results);
   }, []);
 
-  function showSearchMenu() {
-    setSearchMode(undefined);
-  }
-
   return (
     <div className="App">
       <header className={styles["hero-header"]}>
         <h1>BOOKBUDDY</h1>
         <h2>Search through millions of volumes with ease</h2>
-        {!searchMode && <SearchBar onSearch={bookResultsHandler} />}
+        {!searchMode && <Search onSearch={bookResultsHandler} />}
 
         {!searchMode && <h2>Looking for something a little more specific?</h2>}
         {searchMode ? (
-          <SearchBar searchMode={searchMode} onSearch={bookResultsHandler} />
+          <Search searchMode={searchMode} onSearch={bookResultsHandler} />
         ) : (
           <SearchMenu />
         )}
 
-        {books.length > 0 && (
+        {books && (
           <ul className={styles.ul}>
-            {books &&
-              books.map((book) => (
-                <li key={book.id} className={styles.li}>
-                  {book.info.title ?? "Untitled"}
-                </li>
-              ))}
+            {books.map((book) => (
+              <li key={book.id} className={styles.li}>
+                {book.info.title ?? "Untitled"}
+              </li>
+            ))}
           </ul>
         )}
       </header>
@@ -65,3 +63,9 @@ function Home() {
 }
 
 export default Home;
+
+/* : books && books.length < 1 ? (
+          "No results found..."
+        ) : (
+          ""
+        ) */

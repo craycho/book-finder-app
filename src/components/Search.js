@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
-import styles from "./SearchBar.module.css";
+import styles from "./Search.module.css";
 
 const API_KEY = "AIzaSyB6EzRjXUNpB23ivuekvxOAyzpnBu0aaRk";
 const URL = `https://www.googleapis.com/books/v1/volumes?&printType=books&key=${API_KEY}&q=`;
 
-function SearchBar(props) {
+function Search(props) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const { searchMode, onSearch } = props;
 
   useEffect(() => {
-    console.log(isMounted.current, searchMode);
     if (isMounted.current) {
       const searchBy =
         searchMode === "title"
@@ -29,30 +30,41 @@ function SearchBar(props) {
       /**@todo Fuck around with startIndex=10 etc to implement pagination */
 
       const searchBooks = async function () {
-        const response = await fetch(url);
-        const resData = await response.json();
-        console.log(resData);
+        try {
+          setIsLoading(true);
+          const response = await fetch(url);
+          const resData = await response.json();
+          console.log(resData);
 
-        // Displaying results
-        const bookResults = resData.items.map((res) => {
-          return {
-            id: res.id,
-            info: res.volumeInfo,
-          };
-        });
-        onSearch([...bookResults]);
+          // Displaying results
+          const bookResults = resData.items.map((res) => {
+            return {
+              id: res.id,
+              info: res.volumeInfo,
+            };
+          });
+          // const filteredResults = bookResults.filter(
+          //   (book) => book.info.authors.length > 0 && book.info.title !== ""
+          // );
+          setError(null);
+          onSearch([...bookResults]);
+          setIsLoading(false);
+        } catch (error) {
+          setIsLoading(false);
+          setError(`No results found for ${searchQuery}...`);
+          throw new Error(`No results found for ${searchQuery}...`);
+        }
       };
 
       searchBooks();
     } else {
       isMounted.current = true;
     }
-  }, [searchQuery, searchMode, onSearch, isMounted]); // Daje warning jer nema isInitial
+  }, [searchQuery, searchMode, onSearch, isMounted]);
 
   function submitHandler(event) {
     event.preventDefault();
     setSearchQuery(event.target["book-search"].value);
-    console.log("SUBMIT HANDLER");
   }
 
   return (
@@ -76,11 +88,13 @@ function SearchBar(props) {
           <button className={styles["btn-back"]}>← Back</button>
         </Link>
       )}
+      {isLoading && <span className={styles.loader}></span>}
+      {error && <p className={styles.error}>{error}</p>}
     </div>
   );
 }
 
-export default SearchBar;
+export default Search;
 
 /** @todo BONUS FEATURE: */
 /*
