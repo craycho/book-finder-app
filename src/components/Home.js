@@ -1,5 +1,5 @@
-import { useSearchParams } from "react-router-dom";
-import { useState, useEffect, useCallback } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { useState, useEffect, useCallback, useRef } from "react";
 
 import styles from "./Home.module.css";
 import SearchMenu from "./SearchMenu";
@@ -10,6 +10,7 @@ let isInitial = true;
 function Home() {
   const [books, setBooks] = useState([]);
   const [searchMode, setSearchMode] = useState(undefined);
+  const searchRef = useRef("");
   const [searchParams] = useSearchParams();
 
   // Checks if params exist/runs when changed
@@ -38,13 +39,15 @@ function Home() {
   return (
     <div className="App">
       <header className={styles["hero-header"]}>
-        <h1>Book Buddy</h1>
+        <h1>BOOKBUDDY</h1>
+        <h2>Search through millions of volumes with ease</h2>
+        {!searchMode && (
+          <SearchBar searchTerm={searchRef} onSearch={bookResultsHandler} />
+        )}
+
+        {!searchMode && <h2>Looking for something a little more specific?</h2>}
         {searchMode ? (
-          <SearchBar
-            searchMode={searchMode}
-            onSearch={bookResultsHandler}
-            onNavigate={showSearchMenu}
-          />
+          <SearchBar searchMode={searchMode} onSearch={bookResultsHandler} />
         ) : (
           <SearchMenu />
         )}
