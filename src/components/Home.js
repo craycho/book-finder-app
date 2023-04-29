@@ -1,9 +1,11 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 
 import styles from "./Home.module.css";
+import logo from "../assets/logo_transparent.png";
 import SearchMenu from "./SearchMenu";
 import Search from "./Search";
+import BookInfo from "./BookInfo";
 
 let isInitial = true;
 
@@ -12,10 +14,8 @@ function Home() {
   const [searchMode, setSearchMode] = useState(undefined);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  console.log(books);
-
-  // Checks if params exist/runs when changed
   useEffect(() => {
+    // Checks if params exist/runs when changed
     if (isInitial) {
       isInitial = false;
       setSearchParams(""); // Removes searchParams on page reload
@@ -37,7 +37,8 @@ function Home() {
   return (
     <div className="App">
       <header className={styles["hero-header"]}>
-        <h1>BOOKBUDDY</h1>
+        {/* <h1>BOOKBUDDY</h1> */}
+        <img src={logo} className={styles.logo} />
         <h2>Search through millions of volumes with ease</h2>
         {!searchMode && <Search onSearch={bookResultsHandler} />}
 
@@ -49,11 +50,9 @@ function Home() {
         )}
 
         {books && (
-          <ul className={styles.ul}>
+          <ul className={styles.results}>
             {books.map((book) => (
-              <li key={book.id} className={styles.li}>
-                {book.info.title ?? "Untitled"}
-              </li>
+              <BookInfo key={book.id} book={book} />
             ))}
           </ul>
         )}
@@ -63,9 +62,3 @@ function Home() {
 }
 
 export default Home;
-
-/* : books && books.length < 1 ? (
-          "No results found..."
-        ) : (
-          ""
-        ) */

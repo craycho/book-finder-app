@@ -64,6 +64,11 @@ function Search(props) {
 
   function submitHandler(event) {
     event.preventDefault();
+    if (event.target["book-search"].value === "") {
+      setError("Search field can't be empty...");
+      return;
+    }
+
     setSearchQuery(event.target["book-search"].value);
   }
 

@@ -1,20 +1,19 @@
 .search-menu {
+  padding: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 1rem;
-  margin: 1.2rem auto 2rem auto;
+  gap: 2rem;
+
+  margin-top: 1rem;
   min-width: 450px;
-  width: 30%;
 }
 
 .search-menu li {
-  display: flex;
-  align-items: center;
-
   box-shadow: 1px 2px #00000049;
   border-width: 1.7px;
-  min-height: 2rem;
+  min-height: 1.6rem;
+  width: 100%;
   cursor: pointer;
 }
 
@@ -25,8 +24,21 @@
 
 a {
   text-decoration: none;
+  min-width: 140px;
 }
 
 a:visited {
   color: rgb(23, 23, 23);
+}
+
+/* NE RADI TRENUTNO */
+@media only screen and (max-width: 600px) {
+  .search-menu {
+    max-width: 80%;
+  }
+
+  a {
+    min-width: 20%;
+    width: 20%;
+  }
 }
