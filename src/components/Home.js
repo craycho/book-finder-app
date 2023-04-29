@@ -10,7 +10,6 @@ let isInitial = true;
 function Home() {
   const [books, setBooks] = useState([]);
   const [searchMode, setSearchMode] = useState(undefined);
-  const searchRef = useRef("");
   const [searchParams] = useSearchParams();
 
   // Checks if params exist/runs when changed
@@ -41,9 +40,7 @@ function Home() {
       <header className={styles["hero-header"]}>
         <h1>BOOKBUDDY</h1>
         <h2>Search through millions of volumes with ease</h2>
-        {!searchMode && (
-          <SearchBar searchTerm={searchRef} onSearch={bookResultsHandler} />
-        )}
+        {!searchMode && <SearchBar onSearch={bookResultsHandler} />}
 
         {!searchMode && <h2>Looking for something a little more specific?</h2>}
         {searchMode ? (

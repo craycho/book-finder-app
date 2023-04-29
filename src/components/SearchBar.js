@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import styles from "./SearchBar.module.css";
 
 const API_KEY = "AIzaSyB6EzRjXUNpB23ivuekvxOAyzpnBu0aaRk";
-const searchTerm = "";
+const URL = `https://www.googleapis.com/books/v1/volumes?&printType=books&key=${API_KEY}&q=`;
 
 function SearchBar(props) {
   const [searchQuery, setSearchQuery] = useState("");
@@ -12,15 +12,19 @@ function SearchBar(props) {
   const { searchMode, onSearch } = props;
 
   useEffect(() => {
-    console.log(isMounted);
+    console.log(isMounted.current, searchMode);
     if (isMounted.current) {
-      const url = `https://www.googleapis.com/books/v1/volumes?&printType=books&q=${searchTerm}${
+      const searchBy =
         searchMode === "title"
           ? "+intitle"
           : searchMode === "author"
           ? "+inauthor"
-          : "+subject"
-      }:${searchQuery}&key=${API_KEY}`;
+          : "+subject";
+
+      const url = searchMode
+        ? `${URL}${searchBy}:${searchQuery}`
+        : URL + searchQuery;
+      console.log(url);
 
       /**@todo Fuck around with startIndex=10 etc to implement pagination */
 
@@ -48,10 +52,11 @@ function SearchBar(props) {
   function submitHandler(event) {
     event.preventDefault();
     setSearchQuery(event.target["book-search"].value);
+    console.log("SUBMIT HANDLER");
   }
 
   return (
-    <>
+    <div className={styles.search}>
       <form className={styles.form} onSubmit={submitHandler}>
         <br />
         <input
@@ -65,13 +70,13 @@ function SearchBar(props) {
               : "Type the name of a book, author or subject..."
           }
         />
-        {searchMode && (
-          <Link to="/" relative="route">
-            <button className={styles["btn-back"]}>← Back</button>
-          </Link>
-        )}
       </form>
-    </>
+      {searchMode && (
+        <Link to="/" relative="route">
+          <button className={styles["btn-back"]}>← Back</button>
+        </Link>
+      )}
+    </div>
   );
 }
 
