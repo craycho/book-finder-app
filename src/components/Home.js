@@ -50,11 +50,11 @@ function Home() {
         )}
 
         {books && (
-          <ul className={styles.results}>
+          <div className={styles.results}>
             {books.map((book) => (
               <BookInfo key={book.id} book={book} />
             ))}
-          </ul>
+          </div>
         )}
       </header>
     </div>

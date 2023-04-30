@@ -6,18 +6,21 @@ function BookInfo(props) {
   console.log(book);
 
   return (
-    <li className={styles.li}>
-      <div className={styles.book}>
-        <p>{book.info.title ?? "Untitled"}</p>
-        <img src={book.info.imageLinks?.thumbnail || noImage} />
+    <div className={styles.book}>
+      <div className={styles["book-title"]}>
+        {book.info.title ?? "Untitled"}
       </div>
-    </li>
+      <img src={book.info.imageLinks?.thumbnail || noImage} />
+      <p className={styles["book-description"]}>
+        <b>Author:</b>{" "}
+        {book.info.authors?.length > 0 ? book.info.authors : "Unknown"}{" "}
+        <span className={styles.break} /> <b>Published:</b>{" "}
+        {book.info?.publishedDate || "Unknown"}
+        <span className={styles.break} />
+        {book.info?.subtitle || ""}
+      </p>
+    </div>
   );
 }
 
 export default BookInfo;
-
-/* {book.info.title ?? "Untitled"} <br />
-      {<img src={book.info.imageLinks.smallThumbnail} />}
-      <strong>Author: </strong>
-      {book.info.authors} */
