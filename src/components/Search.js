@@ -11,7 +11,8 @@ function Search(props) {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
-  const { searchMode, onSearch } = props;
+  const { searchMode, onSearch, startIndex, setStartIndex } = props;
+  console.log(startIndex);
 
   useEffect(() => {
     if (isMounted.current) {
@@ -32,7 +33,7 @@ function Search(props) {
       const searchBooks = async function () {
         try {
           setIsLoading(true);
-          const response = await fetch(url);
+          const response = await fetch(url + `&startIndex=${startIndex}`);
           const resData = await response.json();
           console.log(resData);
 
@@ -43,9 +44,7 @@ function Search(props) {
               info: res.volumeInfo,
             };
           });
-          // const filteredResults = bookResults.filter(
-          //   (book) => book.info.authors.length > 0 && book.info.title !== ""
-          // );
+
           setError(null);
           onSearch([...bookResults]);
           setIsLoading(false);
@@ -60,7 +59,7 @@ function Search(props) {
     } else {
       isMounted.current = true;
     }
-  }, [searchQuery, searchMode, onSearch, isMounted]);
+  }, [searchQuery, searchMode, onSearch, isMounted, startIndex]);
 
   function submitHandler(event) {
     event.preventDefault();
@@ -69,6 +68,12 @@ function Search(props) {
       return;
     }
 
+    const scrollTarget = document.getElementById("scroll-target");
+    setTimeout(() => {
+      scrollTarget.scrollIntoView({ behavior: "smooth" });
+    }, 500);
+
+    setStartIndex(0);
     setSearchQuery(event.target["book-search"].value);
   }
 

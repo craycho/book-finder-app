@@ -12,14 +12,17 @@
 .search-menu li {
   box-shadow: 1px 2px #00000049;
   border-width: 1.7px;
+  border-color: rgba(23, 23, 23, 0.884);
   min-height: 1.6rem;
   width: 100%;
   cursor: pointer;
+  font-weight: 600;
+  color: rgba(14, 14, 14, 0.904);
 }
 
 .search-menu li:active,
 .search-menu li:hover {
-  background-color: rgb(151, 132, 108);
+  background-color: rgb(164, 148, 127);
 }
 
 a {
