@@ -3,7 +3,7 @@ import noImage from "../assets/no-image-available.jpg";
 
 function BookInfo(props) {
   const { book } = props;
-  console.log(book);
+  // console.log(book);
 
   return (
     <div className={styles.book}>

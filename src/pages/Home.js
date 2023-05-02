@@ -10,7 +10,7 @@ import BookInfo from "../components/BookInfo";
 let isInitial = true;
 
 function Home() {
-  const [books, setBooks] = useState();
+  const [books, setBooks] = useState(null);
   const [searchMode, setSearchMode] = useState(undefined);
   const [startIndex, setStartIndex] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();

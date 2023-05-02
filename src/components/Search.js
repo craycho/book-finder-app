@@ -26,9 +26,6 @@ function Search(props) {
       const url = searchMode
         ? `${URL}${searchBy}:${searchQuery}`
         : URL + searchQuery;
-      console.log(url);
-
-      /**@todo Fuck around with startIndex=10 etc to implement pagination */
 
       const searchBooks = async function () {
         try {
@@ -38,6 +35,11 @@ function Search(props) {
           console.log(resData);
 
           // Displaying results
+          setTimeout(() => {
+            const scrollTarget = document.getElementById("scroll-target");
+            scrollTarget.scrollIntoView({ behavior: "smooth" });
+          }, 1);
+
           const bookResults = resData.items.map((res) => {
             return {
               id: res.id,
@@ -67,11 +69,6 @@ function Search(props) {
       setError("Search field can't be empty...");
       return;
     }
-
-    const scrollTarget = document.getElementById("scroll-target");
-    setTimeout(() => {
-      scrollTarget.scrollIntoView({ behavior: "smooth" });
-    }, 500);
 
     setStartIndex(0);
     setSearchQuery(event.target["book-search"].value);
