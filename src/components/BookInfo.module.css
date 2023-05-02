@@ -14,6 +14,7 @@ li {
 }
 
 .book {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
 
@@ -45,6 +46,23 @@ li {
 img {
   width: 128px;
   margin: 1rem 0 0.5rem 0.5rem;
+}
+
+.favorites-icon {
+  position: absolute;
+  bottom: 1rem;
+  right: 1.2rem;
+
+  width: 45px;
+  height: 45px;
+  color: rgb(112, 81, 81);
+  transition: all 0.1s ease;
+}
+
+.favorites-icon:hover {
+  cursor: pointer;
+  color: rgb(51, 36, 36);
+  transform: scale(1.15);
 }
 
 @media only screen and (max-width: 980px) {

@@ -6,6 +6,7 @@ import logo from "../assets/logo_transparent.png";
 import SearchMenu from "../components/SearchMenu";
 import Search from "../components/Search";
 import BookInfo from "../components/BookInfo";
+import Favorites from "../components/Favorites";
 
 let isInitial = true;
 
@@ -47,6 +48,7 @@ function Home() {
   return (
     <div className="App">
       <header className={styles["hero-header"]}>
+        <Favorites />
         <img src={logo} alt="Book result" className={styles.logo} />
         <h2 id="scroll-target">Search through millions of volumes</h2>
         {!searchMode && (

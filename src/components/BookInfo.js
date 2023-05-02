@@ -1,9 +1,19 @@
 import styles from "./BookInfo.module.css";
+import { SiBookstack } from "react-icons/si";
 import noImage from "../assets/no-image-available.jpg";
+
+import { useContext } from "react";
+import { Context as FavoritesContext } from "../context/favorites-context";
 
 function BookInfo(props) {
   const { book } = props;
-  // console.log(book);
+  const favContext = useContext(FavoritesContext);
+
+  console.log(book);
+
+  const addFavoriteHandler = () => {
+    favContext.addFavorite(book);
+  };
 
   return (
     <div className={styles.book}>
@@ -21,6 +31,10 @@ function BookInfo(props) {
         <span className={styles.break} />
         {book.info?.subtitle || ""}
       </p>
+      <SiBookstack
+        className={styles["favorites-icon"]}
+        onClick={addFavoriteHandler}
+      />
     </div>
   );
 }
