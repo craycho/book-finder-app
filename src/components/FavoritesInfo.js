@@ -9,10 +9,11 @@ function BookInfo(props) {
   const { book } = props;
   const favContext = useContext(FavoritesContext);
 
-  // console.log(book);
+  //   console.log(book);
 
-  const addFavoriteHandler = () => {
-    favContext.addFavorite(book);
+  const removeFavoriteHandler = () => {
+    favContext.removeFavorite(book);
+    console.log("Desila se remove");
   };
 
   return (
@@ -31,9 +32,10 @@ function BookInfo(props) {
         <span className={styles.break} />
         {book.info?.subtitle || ""}
       </div>
+
       <SiBookstack
         className={styles["favorites-icon"]}
-        onClick={addFavoriteHandler}
+        onClick={removeFavoriteHandler}
       />
     </div>
   );

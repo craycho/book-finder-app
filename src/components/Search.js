@@ -12,6 +12,7 @@ function Search(props) {
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const { searchMode, onSearch, startIndex, setStartIndex } = props;
+
   console.log(startIndex);
 
   useEffect(() => {

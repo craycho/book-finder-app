@@ -16,7 +16,7 @@ const ContextProvider = (props) => {
 
   const removeFavorite = (removedFavorite) => {
     const newFavorites = favorites.filter(
-      (fav) => fav.id !== removeFavorite.id
+      (fav) => fav.id !== removedFavorite.id
     );
     setFavorites(newFavorites);
   };

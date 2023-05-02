@@ -1,13 +1,13 @@
 import { useContext, useState } from "react";
 import { Context as FavoritesContext } from "../context/favorites-context";
-import BookInfo from "./BookInfo";
+import FavoritesInfo from "./FavoritesInfo";
 
 import { SiBookstack } from "react-icons/si";
 import styles from "./Favorites.module.css";
 
 function Favorites() {
   const [isHovered, setIsHovered] = useState(false);
-  const [favoritesVisible, setFavoritesVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const favContext = useContext(FavoritesContext);
 
   const mouseEnterHandler = () => {
@@ -18,7 +18,7 @@ function Favorites() {
   };
 
   const showFavoritesHandler = () => {
-    setFavoritesVisible(true);
+    setIsVisible((isVisible) => !isVisible);
   };
 
   return (
@@ -28,11 +28,22 @@ function Favorites() {
         onMouseLeave={mouseLeaveHandler}
         onClick={showFavoritesHandler}
       />
-      {favoritesVisible && (
-        <ul className={styles["favorites-list"]}>
-          {favContext.favorites.map((fav) => (
-            <BookInfo key={fav.id} book={fav} />
-          ))}
+      {isVisible && (
+        <ul className={styles["favorites-modal"]}>
+          {favContext.favorites.length > 0 ? (
+            favContext.favorites.map((fav) => (
+              <FavoritesInfo key={fav.id} book={fav} />
+            ))
+          ) : (
+            <>
+              <p className={styles.empty}>No favorite books added!</p>
+              <p className={styles["empty-instruction"]}>
+                Try adding a favorite book by pressing the{" "}
+                <SiBookstack className={styles["empty-icon"]} /> icon next to
+                any search result.
+              </p>
+            </>
+          )}
         </ul>
       )}
     </div>
