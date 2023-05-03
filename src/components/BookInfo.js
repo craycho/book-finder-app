@@ -6,54 +6,40 @@ import { useContext, useState } from "react";
 import { Context as FavoritesContext } from "../context/favorites-context";
 
 function BookInfo(props) {
+  const favContext = useContext(FavoritesContext);
   const { book } = props;
   const [notification, setNotification] = useState({
     visible: false,
     text: "",
-    green: true,
+    success: undefined,
   });
-  const favContext = useContext(FavoritesContext);
-
-  // console.log(book);
 
   const addFavoriteHandler = () => {
-    //
-    // Checks to see if the added book was already favorited
-    if (favContext.favorites.length < 1) {
+    const alreadyFavorited = favContext.favorites.some(
+      (fav) => fav.id === book.id
+    );
+
+    if (alreadyFavorited) {
+      setNotification({
+        visible: true,
+        text: "Already favorited ✖",
+        success: false,
+      });
+      setTimeout(() => {
+        setNotification({ visible: false, text: "", success: undefined });
+      }, 1000);
+    } else {
       setNotification({
         visible: true,
         text: "Added to favorites ✓",
-        green: true,
+        success: true,
       });
-      favContext.addFavorite(book);
-      setTimeout(() => {
-        setNotification({ visible: false, text: "", green: true });
-      }, 1000);
-    } else {
-      const alreadyFavorited = favContext.favorites.some(
-        (fav) => fav.id === book.id
-      );
 
-      if (alreadyFavorited) {
-        setNotification({
-          visible: true,
-          text: "Already favorited ✖",
-          green: false,
-        });
-        setTimeout(() => {
-          setNotification({ visible: false, text: "", green: false });
-        }, 1000);
-      } else {
-        setNotification({
-          visible: true,
-          text: "Added to favorites ✓",
-          green: true,
-        });
-        favContext.addFavorite(book);
-        setTimeout(() => {
-          setNotification({ visible: false, text: "", green: true });
-        }, 1000);
-      }
+      favContext.addFavorite(book);
+
+      setTimeout(() => {
+        setNotification({ visible: false, text: "", success: undefined });
+      }, 1000);
     }
   };
 
@@ -82,7 +68,7 @@ function BookInfo(props) {
         <div
           className={styles[`added-notification`]}
           style={{
-            backgroundColor: notification.green
+            backgroundColor: notification.success
               ? "rgba(81, 163, 81)"
               : "rgba(255,57,46,255)",
           }}
