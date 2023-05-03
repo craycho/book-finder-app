@@ -89,7 +89,7 @@ img {
   width: 65px;
   height: 32px;
   border-radius: 4px;
-  background-color: rgba(81, 163, 81);
+  /* background-color: rgba(81, 163, 81); */
   font-size: 0.7rem;
   color: rgb(255, 235, 209);
   animation: fade-in-out 1s ease-in-out forwards;

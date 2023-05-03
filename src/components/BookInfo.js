@@ -7,17 +7,54 @@ import { Context as FavoritesContext } from "../context/favorites-context";
 
 function BookInfo(props) {
   const { book } = props;
-  const [showNotification, setShowNotification] = useState(false);
+  const [notification, setNotification] = useState({
+    visible: false,
+    text: "",
+    green: true,
+  });
   const favContext = useContext(FavoritesContext);
 
   // console.log(book);
 
   const addFavoriteHandler = () => {
-    setShowNotification(true);
-    favContext.addFavorite(book);
-    setTimeout(() => {
-      setShowNotification(false);
-    }, 1000);
+    //
+    // Checks to see if the added book was already favorited
+    if (favContext.favorites.length < 1) {
+      setNotification({
+        visible: true,
+        text: "Added to favorites ✓",
+        green: true,
+      });
+      favContext.addFavorite(book);
+      setTimeout(() => {
+        setNotification({ visible: false, text: "", green: true });
+      }, 1000);
+    } else {
+      const alreadyFavorited = favContext.favorites.some(
+        (fav) => fav.id === book.id
+      );
+
+      if (alreadyFavorited) {
+        setNotification({
+          visible: true,
+          text: "Already favorited ✖",
+          green: false,
+        });
+        setTimeout(() => {
+          setNotification({ visible: false, text: "", green: false });
+        }, 1000);
+      } else {
+        setNotification({
+          visible: true,
+          text: "Added to favorites ✓",
+          green: true,
+        });
+        favContext.addFavorite(book);
+        setTimeout(() => {
+          setNotification({ visible: false, text: "", green: true });
+        }, 1000);
+      }
+    }
   };
 
   return (
@@ -41,8 +78,17 @@ function BookInfo(props) {
         className={styles["favorites-icon"]}
         onClick={addFavoriteHandler}
       />
-      {showNotification && (
-        <div className={styles["added-notification"]}>Added to favorites ✓</div>
+      {notification.visible && (
+        <div
+          className={styles[`added-notification`]}
+          style={{
+            backgroundColor: notification.green
+              ? "rgba(81, 163, 81)"
+              : "rgba(255,57,46,255)",
+          }}
+        >
+          {notification.text}
+        </div>
       )}
     </div>
   );

@@ -13,8 +13,6 @@ function Search(props) {
   const isMounted = useRef(false);
   const { searchMode, onSearch, startIndex, setStartIndex } = props;
 
-  console.log(startIndex);
-
   useEffect(() => {
     if (isMounted.current) {
       const searchBy =
@@ -33,7 +31,7 @@ function Search(props) {
           setIsLoading(true);
           const response = await fetch(url + `&startIndex=${startIndex}`);
           const resData = await response.json();
-          console.log(resData);
+          // console.log(resData);
 
           // Displaying results
           setTimeout(() => {
