@@ -1,5 +1,6 @@
-import styles from "./BookInfo.module.css";
+import styles from "./FavoriteItem.module.css";
 import { SiBookstack } from "react-icons/si";
+
 import noImage from "../assets/no-image-available.jpg";
 
 import { useContext } from "react";
@@ -9,11 +10,8 @@ function BookInfo(props) {
   const { book } = props;
   const favContext = useContext(FavoritesContext);
 
-  //   console.log(book);
-
   const removeFavoriteHandler = () => {
     favContext.removeFavorite(book);
-    console.log("Desila se remove");
   };
 
   return (
@@ -21,7 +19,7 @@ function BookInfo(props) {
       <div className={styles["book-title"]}>
         {book.info.title ?? "Untitled"}
       </div>
-      <img src={book.info.imageLinks?.thumbnail || noImage} />
+      <img src={book.info.imageLinks?.thumbnail || noImage} alt="book-cover" />
       <div className={styles["book-description"]}>
         <b>Author:</b>{" "}
         {book.info.authors?.length > 0

@@ -26,6 +26,12 @@ li {
   background-color: rgb(255, 235, 209);
 }
 
+@media only screen and (max-width: 980px) {
+  .book {
+    width: 95%;
+  }
+}
+
 .book-title {
   width: 100%;
   font-weight: 600;
@@ -51,22 +57,55 @@ img {
 .favorites-icon {
   position: absolute;
   bottom: 1rem;
-  right: 1.2rem;
+  right: 1.5rem;
 
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   color: rgb(112, 81, 81);
   transition: all 0.1s ease;
 }
 
+/* ,.favorites-icon:hover .favorites-plus */
 .favorites-icon:hover {
   cursor: pointer;
   color: rgb(51, 36, 36);
   transform: scale(1.15);
+  transition-duration: 0.1s;
 }
 
-@media only screen and (max-width: 980px) {
-  .book {
-    width: 95%;
+.favorites-icon:active {
+  transform: scale(0.85);
+  transition-duration: 0.5s;
+}
+
+.added-notification {
+  position: absolute;
+  bottom: 4.4rem;
+  right: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 65px;
+  height: 32px;
+  border-radius: 4px;
+  background-color: rgba(81, 163, 81);
+  font-size: 0.7rem;
+  color: rgb(255, 235, 209);
+  animation: fade-in-out 1s ease-in-out forwards;
+}
+
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-5px);
   }
 }

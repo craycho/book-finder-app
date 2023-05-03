@@ -22,8 +22,10 @@ h2 {
 
   max-width: fit-content;
   font-size: 1.3rem;
+  font-weight: 900;
+
   color: rgb(234, 234, 234);
-  -webkit-text-stroke: 1.2px rgb(23, 23, 23);
+  -webkit-text-stroke: 1.1px rgb(23, 23, 23);
   text-shadow: 1.5px 1.5px #04040433;
 }
 
@@ -47,19 +49,6 @@ h2 {
   column-gap: 1rem;
 }
 
-@media only screen and (max-width: 980px) {
-  .results {
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    width: 85%;
-  }
-
-  .btn-load {
-    min-width: 80vw;
-  }
-}
-
 .btn-load {
   display: block;
   margin: 0.5rem auto 2rem auto;
@@ -73,6 +62,19 @@ h2 {
   cursor: pointer;
   font-weight: 600;
   color: rgba(14, 14, 14, 0.904);
+}
+
+@media only screen and (max-width: 980px) {
+  .results {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 85%;
+  }
+
+  .btn-load {
+    min-width: 80vw;
+  }
 }
 
 .btn-back {

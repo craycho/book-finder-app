@@ -10,13 +10,17 @@
 }
 
 .search-menu li {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   box-shadow: 1px 2px #00000049;
   border-width: 1.7px;
   border-color: rgba(23, 23, 23, 0.884);
   min-height: 1.6rem;
   width: 100%;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 700;
   color: rgba(14, 14, 14, 0.904);
 }
 
