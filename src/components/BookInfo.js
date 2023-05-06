@@ -7,12 +7,23 @@ import { Context as FavoritesContext } from "../context/favorites-context";
 
 function BookInfo(props) {
   const favContext = useContext(FavoritesContext);
-  const { book } = props;
+  const { book, booksState, setBooksState } = props;
   const [notification, setNotification] = useState({
     visible: false,
     text: "",
     success: undefined,
   });
+
+  const setFavoriteProp = () => {
+    const newBooks = booksState.map((b) => {
+      if (b.id === book.id) {
+        return { ...b, favorite: !book.favorite };
+      }
+      return b;
+    });
+
+    return newBooks;
+  };
 
   const addFavoriteHandler = () => {
     const alreadyFavorited = favContext.favorites.some(
@@ -20,6 +31,14 @@ function BookInfo(props) {
     );
 
     if (alreadyFavorited) {
+      favContext.removeFavorite(book);
+      const favorites = JSON.parse(localStorage.getItem("favorites"));
+      const newFavorites = favorites.filter((fav) => fav.id !== book.id);
+      localStorage.setItem("favorites", JSON.stringify(newFavorites));
+
+      const newBooks = setFavoriteProp();
+      setBooksState(newBooks);
+
       setNotification({
         visible: true,
         text: "Already favorited ✖",
@@ -35,24 +54,41 @@ function BookInfo(props) {
         success: true,
       });
 
-      favContext.addFavorite(book);
+      // Add favorite book to context
+      favContext.addFavorite({ ...book, favorite: true });
+
+      // Add favorite book to local storage
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-      console.log(favorites);
-      favorites.push(book);
+      favorites.push({ ...book, favorite: true });
       localStorage.setItem("favorites", JSON.stringify(favorites));
 
       setTimeout(() => {
         setNotification({ visible: false, text: "", success: undefined });
       }, 1000);
+
+      // Changes "favorite" property in the state of the currently displayed book
+      const newBooks = setFavoriteProp();
+      setBooksState(newBooks);
     }
   };
 
   return (
     <div className={styles.book}>
-      <div className={styles["book-title"]}>
-        {book.info.title ?? "Untitled"}
-      </div>
-      <img src={book.info.imageLinks?.thumbnail || noImage} alt="book-cover" />
+      <a
+        href={book.info.infoLink}
+        rel="noopener"
+        target="_blank"
+        className={styles["book-title"]}
+      >
+        {book.info.title || "Untitled"}
+      </a>
+
+      <a href={book.info.infoLink} rel="noopener" target="_blank">
+        <img
+          src={book.info.imageLinks?.thumbnail || noImage}
+          alt="book-cover"
+        />
+      </a>
       <div className={styles["book-description"]}>
         <b>Author:</b>{" "}
         {book.info.authors?.length > 0
@@ -63,9 +99,12 @@ function BookInfo(props) {
         <span className={styles.break} />
         {book.info?.subtitle || ""}
       </div>
-
       <SiBookstack
-        className={styles["favorites-icon"]}
+        className={
+          book.favorite
+            ? styles["favorites-icon__favorited"]
+            : styles["favorites-icon"]
+        }
         onClick={addFavoriteHandler}
       />
       {notification.visible && (

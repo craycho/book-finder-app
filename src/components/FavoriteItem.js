@@ -16,14 +16,27 @@ function BookInfo(props) {
     const favorites = JSON.parse(localStorage.getItem("favorites"));
     const newFavorites = favorites.filter((fav) => fav.id !== book.id);
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
+    /* 
+    const newBooks = setFavoriteProp();
+    setBooksState(newBooks); */
   };
 
   return (
     <div className={styles.book}>
-      <div className={styles["book-title"]}>
-        {book.info.title ?? "Untitled"}
-      </div>
-      <img src={book.info.imageLinks?.thumbnail || noImage} alt="book-cover" />
+      <a
+        href={book.info.infoLink}
+        rel="noopener"
+        target="_blank"
+        className={styles["book-title"]}
+      >
+        {book.info.title || "Untitled"}
+      </a>
+      <a href={book.info.infoLink} rel="noopener" target="_blank">
+        <img
+          src={book.info.imageLinks?.thumbnail || noImage}
+          alt="book-cover"
+        />
+      </a>
       <div className={styles["book-description"]}>
         <b>Author:</b>{" "}
         {book.info.authors?.length > 0

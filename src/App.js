@@ -13,6 +13,4 @@ function App() {
 export default App;
 
 /**@todo Fix CSS and remove unnecessary classes for Favorites modal */
-/**@todo Save favorites to local storage and load them when app starts */
-/**@todo Add a link feature to the books */
 /**@todo Add a other books by this author feature */

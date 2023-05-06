@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { Context as FavoritesContext } from "../context/favorites-context";
 
 import styles from "./Search.module.css";
 
@@ -10,6 +11,7 @@ function Search(props) {
   const [searchQuery, setSearchQuery] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const favContext = useContext(FavoritesContext);
   const isMounted = useRef(false);
   const { searchMode, onSearch, startIndex, setStartIndex } = props;
 
@@ -31,7 +33,6 @@ function Search(props) {
           setIsLoading(true);
           const response = await fetch(url + `&startIndex=${startIndex}`);
           const resData = await response.json();
-          // console.log(resData);
 
           // Displaying results
           setTimeout(() => {
@@ -39,10 +40,22 @@ function Search(props) {
             scrollTarget.scrollIntoView({ behavior: "smooth" });
           }, 100);
 
+          // Checks if any results are in the favorites array
           const bookResults = resData.items.map((res) => {
+            for (const fav of favContext.favorites) {
+              if (fav.id === res.id) {
+                return {
+                  id: res.id,
+                  info: res.volumeInfo,
+                  favorite: true,
+                };
+              }
+            }
+            // Else
             return {
               id: res.id,
               info: res.volumeInfo,
+              favorite: false,
             };
           });
 

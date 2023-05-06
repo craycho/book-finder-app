@@ -16,6 +16,8 @@ function Home() {
   const [startIndex, setStartIndex] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
 
+  console.log(books);
+
   useEffect(() => {
     // Checks if params exist/runs when changed
     if (isInitial) {
@@ -44,6 +46,8 @@ function Home() {
     const scrollTarget = document.getElementById("scroll-target");
     scrollTarget.scrollIntoView({ behavior: "smooth" });
   };
+
+  // console.log(books);
 
   return (
     <div className="App">
@@ -75,7 +79,12 @@ function Home() {
           <>
             <div className={styles.results}>
               {books.map((book) => (
-                <BookInfo key={book.id} book={book} />
+                <BookInfo
+                  key={book.id}
+                  book={book}
+                  booksState={books}
+                  setBooksState={setBooks}
+                />
               ))}
             </div>
             <button className={styles["btn-load"]} onClick={startIndexHandler}>

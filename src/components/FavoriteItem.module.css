@@ -20,6 +20,8 @@
 }
 
 .book-title {
+  text-decoration: none;
+  color: rgb(23, 23, 23);
   width: 100%;
   font-weight: 600;
   margin-left: 0.5rem;

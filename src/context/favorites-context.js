@@ -16,7 +16,6 @@ const ContextProvider = (props) => {
 
   const addFavorite = (newFavorite) => {
     setFavorites((favorites) => [...favorites, newFavorite]);
-    console.log(favorites);
   };
 
   const removeFavorite = (removedFavorite) => {
