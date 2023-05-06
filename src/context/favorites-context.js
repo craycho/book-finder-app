@@ -6,6 +6,8 @@ function getIntialFavorites() {
 }
 
 export const Context = createContext({
+  displayedBooks: [],
+  changeDisplayedBooks: () => {},
   favorites: [],
   addFavorite: () => {},
   removeFavorite: () => {},
@@ -13,6 +15,11 @@ export const Context = createContext({
 
 const ContextProvider = (props) => {
   const [favorites, setFavorites] = useState(getIntialFavorites);
+  const [displayedBooks, setDisplayedBooks] = useState(null);
+
+  const changeDisplayedBooks = (results) => {
+    setDisplayedBooks(results);
+  };
 
   const addFavorite = (newFavorite) => {
     setFavorites((favorites) => [...favorites, newFavorite]);
@@ -28,6 +35,8 @@ const ContextProvider = (props) => {
   return (
     <Context.Provider
       value={{
+        displayedBooks: displayedBooks,
+        changeDisplayedBooks: changeDisplayedBooks,
         favorites: favorites,
         addFavorite: addFavorite,
         removeFavorite: removeFavorite,

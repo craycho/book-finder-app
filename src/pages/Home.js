@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 
 import styles from "./Home.module.css";
 import logo from "../assets/logo_transparent.png";
@@ -7,16 +7,19 @@ import SearchMenu from "../components/SearchMenu";
 import Search from "../components/Search";
 import BookInfo from "../components/BookInfo";
 import Favorites from "../components/Favorites";
+import { Context as FavoritesContext } from "../context/favorites-context";
 
 let isInitial = true;
 
 function Home() {
   const [books, setBooks] = useState(null);
+  const favContext = useContext(FavoritesContext);
+
   const [searchMode, setSearchMode] = useState(undefined);
   const [startIndex, setStartIndex] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
 
-  console.log(books);
+  console.log(favContext.displayedBooks);
 
   useEffect(() => {
     // Checks if params exist/runs when changed
@@ -38,7 +41,9 @@ function Home() {
   }, [searchParams, setSearchMode, setSearchParams]);
 
   const bookResultsHandler = useCallback((results) => {
-    setBooks(results);
+    favContext.changeDisplayedBooks(results);
+
+    // setBooks(results);
   }, []);
 
   const startIndexHandler = () => {
@@ -75,15 +80,15 @@ function Home() {
           <SearchMenu />
         )}
 
-        {books && (
+        {favContext.displayedBooks && (
           <>
             <div className={styles.results}>
-              {books.map((book) => (
+              {favContext.displayedBooks.map((book) => (
                 <BookInfo
                   key={book.id}
                   book={book}
-                  booksState={books}
-                  setBooksState={setBooks}
+                  booksState={favContext.displayedBooks}
+                  setBooksState={favContext.changeDisplayedBooks}
                 />
               ))}
             </div>

@@ -68,7 +68,7 @@ function BookInfo(props) {
 
       // Changes "favorite" property in the state of the currently displayed book
       const newBooks = setFavoriteProp();
-      setBooksState(newBooks);
+      favContext.changeDisplayedBooks(newBooks);
     }
   };
 

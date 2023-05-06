@@ -10,15 +10,27 @@ function BookInfo(props) {
   const { book } = props;
   const favContext = useContext(FavoritesContext);
 
+  const setFavoriteProp = () => {
+    const newBooks = favContext.displayedBooks.map((displayedBook) => {
+      if (displayedBook.id === book.id) {
+        return { ...displayedBook, favorite: !book.favorite };
+      }
+      return displayedBook;
+    });
+
+    return newBooks;
+  };
+
   const removeFavoriteHandler = () => {
     favContext.removeFavorite(book);
+    favContext.changeDisplayedBooks();
 
     const favorites = JSON.parse(localStorage.getItem("favorites"));
     const newFavorites = favorites.filter((fav) => fav.id !== book.id);
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
-    /* 
+
     const newBooks = setFavoriteProp();
-    setBooksState(newBooks); */
+    favContext.changeDisplayedBooks(newBooks);
   };
 
   return (
