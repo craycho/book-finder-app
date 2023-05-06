@@ -37,7 +37,7 @@ function Search(props) {
           setTimeout(() => {
             const scrollTarget = document.getElementById("scroll-target");
             scrollTarget.scrollIntoView({ behavior: "smooth" });
-          }, 1);
+          }, 100);
 
           const bookResults = resData.items.map((res) => {
             return {
@@ -69,7 +69,7 @@ function Search(props) {
       return;
     }
 
-    setStartIndex(0);
+    setStartIndex(0); // Svaki search ce poceti od prvog pagea
     setSearchQuery(event.target["book-search"].value);
   }
 

@@ -1,5 +1,10 @@
 import { createContext, useState } from "react";
 
+function getIntialFavorites() {
+  const favorites = JSON.parse(localStorage.getItem("favorites"));
+  return favorites || [];
+}
+
 export const Context = createContext({
   favorites: [],
   addFavorite: () => {},
@@ -7,7 +12,7 @@ export const Context = createContext({
 });
 
 const ContextProvider = (props) => {
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(getIntialFavorites);
 
   const addFavorite = (newFavorite) => {
     setFavorites((favorites) => [...favorites, newFavorite]);

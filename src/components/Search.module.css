@@ -26,11 +26,9 @@ input {
 }
 
 .btn-back {
-  box-shadow: inset 0px 1px 0px 0px #ffffff;
   background-color: rgba(255, 235, 209, 0.868);
   border-radius: 6px;
-  border: 1px solid #dcdcdc;
-  display: inline-block;
+  display: block;
   cursor: pointer;
   color: rgba(23, 23, 23, 0.797);
   font-size: 15px;
@@ -42,6 +40,10 @@ input {
   position: absolute;
   left: -8px;
   top: 82px;
+}
+
+.btn-back:hover {
+  background-color: rgba(225, 208, 186, 0.868);
 }
 
 .error {
@@ -60,7 +62,7 @@ input {
   width: 35px;
   height: 35px;
   display: block;
-  margin: 1rem auto;
+  margin: 5rem auto;
 
   border-radius: 50%;
   border-top: 3px solid #fff;

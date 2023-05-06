@@ -36,6 +36,10 @@ function BookInfo(props) {
       });
 
       favContext.addFavorite(book);
+      const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      console.log(favorites);
+      favorites.push(book);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
 
       setTimeout(() => {
         setNotification({ visible: false, text: "", success: undefined });

@@ -30,7 +30,7 @@ function Home() {
       setStartIndex(0);
     } else {
       setSearchMode(undefined);
-      setBooks(undefined); // Hides results on return to menu
+      // setBooks(undefined); // Hides results on return to menu
       setStartIndex(0);
     }
   }, [searchParams, setSearchMode, setSearchParams]);

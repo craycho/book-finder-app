@@ -12,6 +12,10 @@ function BookInfo(props) {
 
   const removeFavoriteHandler = () => {
     favContext.removeFavorite(book);
+
+    const favorites = JSON.parse(localStorage.getItem("favorites"));
+    const newFavorites = favorites.filter((fav) => fav.id !== book.id);
+    localStorage.setItem("favorites", JSON.stringify(newFavorites));
   };
 
   return (
