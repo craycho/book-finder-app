@@ -5,6 +5,7 @@ import setFavoriteProp from "../util/setFavoriteProp";
 import styles from "./FavoriteItem.module.css";
 import { SiBookstack } from "react-icons/si";
 import noImage from "../assets/no-image-available.jpg";
+import FavoriteButton from "./FavoriteButton";
 
 function BookInfo(props) {
   const { book } = props;
@@ -54,10 +55,7 @@ function BookInfo(props) {
         {book.info?.subtitle || ""}
       </div>
 
-      <SiBookstack
-        className={styles["favorites-icon"]}
-        onClick={removeFavoriteHandler}
-      />
+      <FavoriteButton book={book} />
     </div>
   );
 }
