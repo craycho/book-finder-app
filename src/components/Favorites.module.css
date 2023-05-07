@@ -11,8 +11,25 @@
 
 .favorites-icon:hover {
   cursor: pointer;
-  fill: rgb(218, 165, 32);
-  transform: scale(1.15);
+  fill: #e2b659;
+  transform: scale(1.2);
+}
+
+.favorites-icon:active {
+  transform: scale(0.85);
+  transition-duration: 0.5s;
+}
+
+.favorites-icon__clicked {
+  position: fixed;
+  top: 2rem;
+  right: 3rem;
+  width: 45px;
+  height: 45px;
+
+  color: #e2b659;
+  transform: scale(1.25);
+  transition: all 0.1s ease;
 }
 
 @media only screen and (max-width: 980px) {
@@ -24,6 +41,18 @@
     width: 40px;
     height: 40px;
     color: rgb(234, 234, 234);
+    transition: all 0.1s ease;
+  }
+
+  .favorites-icon__clicked {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    width: 40px;
+    height: 40px;
+
+    color: #e2b659;
+    transform: scale(1.25);
     transition: all 0.1s ease;
   }
 }

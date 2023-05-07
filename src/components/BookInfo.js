@@ -1,47 +1,38 @@
+import { useContext, useState } from "react";
+import { Context as BooksContext } from "../context/books-context";
+import setFavoriteProp from "../util/setFavoriteProp";
+
 import styles from "./BookInfo.module.css";
 import { SiBookstack } from "react-icons/si";
 import noImage from "../assets/no-image-available.jpg";
 
-import { useContext, useState } from "react";
-import { Context as FavoritesContext } from "../context/favorites-context";
-
 function BookInfo(props) {
-  const favContext = useContext(FavoritesContext);
-  const { book, booksState, setBooksState } = props;
+  const booksContext = useContext(BooksContext);
+  const { book, setBooksState } = props;
+  const booksState = props.booksState || [];
   const [notification, setNotification] = useState({
     visible: false,
     text: "",
     success: undefined,
   });
 
-  const setFavoriteProp = () => {
-    const newBooks = booksState.map((b) => {
-      if (b.id === book.id) {
-        return { ...b, favorite: !book.favorite };
-      }
-      return b;
-    });
-
-    return newBooks;
-  };
-
-  const addFavoriteHandler = () => {
-    const alreadyFavorited = favContext.favorites.some(
+  const setFavoriteHandler = () => {
+    const alreadyFavorited = booksContext.favorites.some(
       (fav) => fav.id === book.id
     );
 
     if (alreadyFavorited) {
-      favContext.removeFavorite(book);
+      booksContext.removeFavorite(book);
       const favorites = JSON.parse(localStorage.getItem("favorites"));
       const newFavorites = favorites.filter((fav) => fav.id !== book.id);
       localStorage.setItem("favorites", JSON.stringify(newFavorites));
 
-      const newBooks = setFavoriteProp();
+      const newBooks = setFavoriteProp(booksState, book);
       setBooksState(newBooks);
 
       setNotification({
         visible: true,
-        text: "Already favorited ✖",
+        text: "Removed from favorites ✖",
         success: false,
       });
       setTimeout(() => {
@@ -55,7 +46,7 @@ function BookInfo(props) {
       });
 
       // Add favorite book to context
-      favContext.addFavorite({ ...book, favorite: true });
+      booksContext.addFavorite({ ...book, favorite: true });
 
       // Add favorite book to local storage
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -67,8 +58,8 @@ function BookInfo(props) {
       }, 1000);
 
       // Changes "favorite" property in the state of the currently displayed book
-      const newBooks = setFavoriteProp();
-      favContext.changeDisplayedBooks(newBooks);
+      const newBooks = setFavoriteProp(booksState, book);
+      booksContext.changeDisplayedBooks(newBooks);
     }
   };
 
@@ -76,7 +67,7 @@ function BookInfo(props) {
     <div className={styles.book}>
       <a
         href={book.info.infoLink}
-        rel="noopener"
+        rel="noreferrer"
         target="_blank"
         className={styles["book-title"]}
       >
@@ -105,7 +96,7 @@ function BookInfo(props) {
             ? styles["favorites-icon__favorited"]
             : styles["favorites-icon"]
         }
-        onClick={addFavoriteHandler}
+        onClick={setFavoriteHandler}
       />
       {notification.visible && (
         <div

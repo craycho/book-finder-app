@@ -3,11 +3,11 @@ import ReactDOM from "react-dom/client";
 
 import "./index.css";
 import App from "./App";
-import FavoritesContextProvider from "./context/favorites-context";
+import BooksContextProvider from "./context/books-context";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <FavoritesContextProvider>
+  <BooksContextProvider>
     <App />
-  </FavoritesContextProvider>
+  </BooksContextProvider>
 );

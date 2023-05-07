@@ -1,25 +1,23 @@
-import { useSearchParams } from "react-router-dom";
-import { useState, useEffect, useCallback, useContext } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useState, useEffect, useContext } from "react";
 
 import styles from "./Home.module.css";
 import logo from "../assets/logo_transparent.png";
+
 import SearchMenu from "../components/SearchMenu";
 import Search from "../components/Search";
 import BookInfo from "../components/BookInfo";
 import Favorites from "../components/Favorites";
-import { Context as FavoritesContext } from "../context/favorites-context";
+import { Context as BooksContext } from "../context/books-context";
 
 let isInitial = true;
 
 function Home() {
-  const [books, setBooks] = useState(null);
-  const favContext = useContext(FavoritesContext);
-
+  const booksContext = useContext(BooksContext);
   const [searchMode, setSearchMode] = useState(undefined);
   const [startIndex, setStartIndex] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
-
-  console.log(favContext.displayedBooks);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Checks if params exist/runs when changed
@@ -40,39 +38,34 @@ function Home() {
     }
   }, [searchParams, setSearchMode, setSearchParams]);
 
-  const bookResultsHandler = useCallback((results) => {
-    favContext.changeDisplayedBooks(results);
-
-    // setBooks(results);
-  }, []);
-
   const startIndexHandler = () => {
     setStartIndex((prevIndex) => prevIndex + 10);
     const scrollTarget = document.getElementById("scroll-target");
     scrollTarget.scrollIntoView({ behavior: "smooth" });
   };
 
-  // console.log(books);
-
   return (
     <div className="App">
       <header className={styles["hero-header"]}>
         <Favorites />
-        <img src={logo} alt="Book result" className={styles.logo} />
+        <img
+          src={logo}
+          alt="Book result"
+          className={styles.logo}
+          onClick={() => {
+            booksContext.changeDisplayedBooks([]);
+            navigate("/");
+          }}
+        />
         <h2 id="scroll-target">Search through millions of volumes</h2>
         {!searchMode && (
-          <Search
-            onSearch={bookResultsHandler}
-            startIndex={startIndex}
-            setStartIndex={setStartIndex}
-          />
+          <Search startIndex={startIndex} setStartIndex={setStartIndex} />
         )}
 
         {!searchMode && <h2>Looking for something a little more specific?</h2>}
         {searchMode ? (
           <Search
             searchMode={searchMode}
-            onSearch={bookResultsHandler}
             startIndex={startIndex}
             setStartIndex={setStartIndex}
           />
@@ -80,15 +73,15 @@ function Home() {
           <SearchMenu />
         )}
 
-        {favContext.displayedBooks && (
+        {booksContext.displayedBooks.length > 0 && (
           <>
             <div className={styles.results}>
-              {favContext.displayedBooks.map((book) => (
+              {booksContext.displayedBooks.map((book) => (
                 <BookInfo
                   key={book.id}
                   book={book}
-                  booksState={favContext.displayedBooks}
-                  setBooksState={favContext.changeDisplayedBooks}
+                  booksState={booksContext.displayedBooks}
+                  setBooksState={booksContext.changeDisplayedBooks}
                 />
               ))}
             </div>

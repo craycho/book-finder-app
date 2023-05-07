@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Context as FavoritesContext } from "../context/favorites-context";
+import { Context as BooksContext } from "../context/books-context";
 import FavoriteItem from "./FavoriteItem";
 
 import { SiBookstack } from "react-icons/si";
@@ -7,7 +7,7 @@ import { ImCross } from "react-icons/im";
 import styles from "./FavoritesModal.module.css";
 
 function BookInfo(props) {
-  const favContext = useContext(FavoritesContext);
+  const booksContext = useContext(BooksContext);
 
   return (
     <>
@@ -18,10 +18,10 @@ function BookInfo(props) {
           onClick={props.onWrapperClick}
         />
 
-        {favContext.favorites.length > 0 ? (
+        {booksContext.favorites.length > 0 ? (
           <>
             <p className={styles.title}>Favorites</p>
-            {favContext.favorites.map((fav) => (
+            {booksContext.favorites.map((fav) => (
               <FavoriteItem key={fav.id} book={fav} />
             ))}
           </>

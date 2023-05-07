@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Context as FavoritesContext } from "../context/favorites-context";
+import { Context as BooksContext } from "../context/books-context";
 
 import styles from "./Search.module.css";
 
@@ -8,12 +8,13 @@ const API_KEY = "AIzaSyB6EzRjXUNpB23ivuekvxOAyzpnBu0aaRk";
 const URL = `https://www.googleapis.com/books/v1/volumes?&printType=books&key=${API_KEY}&q=`;
 
 function Search(props) {
+  const { searchMode, startIndex, setStartIndex } = props;
+  const isMounted = useRef(false);
+
   const [searchQuery, setSearchQuery] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const favContext = useContext(FavoritesContext);
-  const isMounted = useRef(false);
-  const { searchMode, onSearch, startIndex, setStartIndex } = props;
+  const booksContext = useContext(BooksContext);
 
   useEffect(() => {
     if (isMounted.current) {
@@ -42,7 +43,7 @@ function Search(props) {
 
           // Checks if any results are in the favorites array
           const bookResults = resData.items.map((res) => {
-            for (const fav of favContext.favorites) {
+            for (const fav of booksContext.favorites) {
               if (fav.id === res.id) {
                 return {
                   id: res.id,
@@ -60,7 +61,7 @@ function Search(props) {
           });
 
           setError(null);
-          onSearch([...bookResults]);
+          booksContext.changeDisplayedBooks([...bookResults]);
           setIsLoading(false);
         } catch (error) {
           setIsLoading(false);
@@ -73,7 +74,7 @@ function Search(props) {
     } else {
       isMounted.current = true;
     }
-  }, [searchQuery, searchMode, onSearch, isMounted, startIndex]);
+  }, [searchQuery, searchMode, isMounted, startIndex]);
 
   function submitHandler(event) {
     event.preventDefault();
@@ -91,6 +92,7 @@ function Search(props) {
       <form className={styles.form} onSubmit={submitHandler}>
         <br />
         <input
+          autoFocus
           autoComplete="off"
           type="search"
           name="book-search"

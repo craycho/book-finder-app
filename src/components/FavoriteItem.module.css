@@ -54,13 +54,14 @@ img {
 
   width: 40px;
   height: 40px;
-  color: rgb(112, 81, 81);
+  color: #ff844e;
+  transform: scale(1.25);
   transition: all 0.1s ease;
 }
 
 .favorites-icon:hover {
   cursor: pointer;
-  color: rgb(51, 36, 36);
+  color: #55433c;
   transform: scale(1.15);
   transition-duration: 0.1s;
 }
@@ -76,6 +77,6 @@ img {
 
 @media only screen and (max-width: 980px) {
   .book {
-    width: 95%;
+    width: 90%;
   }
 }

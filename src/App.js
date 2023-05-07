@@ -12,5 +12,7 @@ function App() {
 }
 export default App;
 
+/**@todo Favorites and X move with the favorite items, fix it */
+/**@todo Add an other books by this author feature */
+/**@todo Add proper folders for the components (npr. cart, layout, shop, UI) */
 /**@todo Fix CSS and remove unnecessary classes for Favorites modal */
-/**@todo Add a other books by this author feature */

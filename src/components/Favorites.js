@@ -14,7 +14,11 @@ function Favorites() {
   return (
     <div className={styles.favorites}>
       <SiBookstack
-        className={styles["favorites-icon"]}
+        className={
+          isVisible
+            ? styles["favorites-icon__clicked"]
+            : styles["favorites-icon"]
+        }
         onClick={showFavoritesHandler}
       />
       {isVisible && <FavoritesModal onWrapperClick={showFavoritesHandler} />}

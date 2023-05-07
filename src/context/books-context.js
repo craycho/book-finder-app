@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useCallback, useState } from "react";
 
 function getIntialFavorites() {
   const favorites = JSON.parse(localStorage.getItem("favorites"));
@@ -7,19 +7,22 @@ function getIntialFavorites() {
 
 export const Context = createContext({
   displayedBooks: [],
-  changeDisplayedBooks: () => {},
+  changeDisplayedBooks: (results) => {},
   favorites: [],
-  addFavorite: () => {},
-  removeFavorite: () => {},
+  addFavorite: (newFavorite) => {},
+  removeFavorite: (removedFavorite) => {},
 });
 
 const ContextProvider = (props) => {
   const [favorites, setFavorites] = useState(getIntialFavorites);
-  const [displayedBooks, setDisplayedBooks] = useState(null);
+  const [displayedBooks, setDisplayedBooks] = useState([]);
 
-  const changeDisplayedBooks = (results) => {
-    setDisplayedBooks(results);
-  };
+  const changeDisplayedBooks = useCallback(
+    (results) => {
+      setDisplayedBooks(results);
+    },
+    [setDisplayedBooks]
+  );
 
   const addFavorite = (newFavorite) => {
     setFavorites((favorites) => [...favorites, newFavorite]);
