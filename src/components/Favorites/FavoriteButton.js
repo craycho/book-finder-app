@@ -1,19 +1,19 @@
 import { useContext, useState } from "react";
-import { Context as BooksContext } from "../context/books-context";
-import setFavoriteProp from "../util/setFavoriteProp";
+import { Context as BooksContext } from "../../context/books-context";
+import setFavoriteProp from "../../util/setFavoriteProp";
 
 import styles from "./FavoriteButton.module.css";
 import { SiBookstack } from "react-icons/si";
 
 function FavoriteButton(props) {
   const { book } = props;
-  const booksContext = useContext(BooksContext);
-  const displayedBooks = booksContext.displayedBooks || [];
   const [notification, setNotification] = useState({
     visible: false,
     text: "",
     success: undefined,
   });
+  const booksContext = useContext(BooksContext);
+  const displayedBooks = booksContext.displayedBooks || [];
 
   const setFavoriteHandler = () => {
     const alreadyFavorited = booksContext.favorites.some(

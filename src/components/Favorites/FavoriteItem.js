@@ -1,22 +1,14 @@
 import { useContext } from "react";
-import { Context as BooksContext } from "../context/books-context";
-import setFavoriteProp from "../util/setFavoriteProp";
+import { Context as BooksContext } from "../../context/books-context";
+import setFavoriteProp from "../../util/setFavoriteProp";
 
 import styles from "./FavoriteItem.module.css";
-import { SiBookstack } from "react-icons/si";
-import noImage from "../assets/no-image-available.jpg";
+import noImage from "../../assets/no-image-available.jpg";
 import FavoriteButton from "./FavoriteButton";
 
-function BookInfo(props) {
+function FavoriteItem(props) {
   const { book } = props;
   const booksContext = useContext(BooksContext);
-  /** @todo MAKE NOTIFICATIONS WORK IN FAVORITES MODAL */
-  /*
-  const [notification, setNotification] = useState({
-    visible: false,
-    text: "",
-    success: undefined,
-  }); */
 
   const removeFavoriteHandler = () => {
     booksContext.removeFavorite(book);
@@ -60,15 +52,4 @@ function BookInfo(props) {
   );
 }
 
-export default BookInfo;
-
-/* const setFavoriteProp = () => {
-    const newBooks = booksContext.displayedBooks.map((displayedBook) => {
-      if (displayedBook.id === book.id) {
-        return { ...displayedBook, favorite: !book.favorite };
-      }
-      return displayedBook;
-    });
-
-    return newBooks;
-  }; */
+export default FavoriteItem;

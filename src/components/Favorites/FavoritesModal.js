@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Context as BooksContext } from "../context/books-context";
+import { Context as BooksContext } from "../../context/books-context";
 import FavoriteItem from "./FavoriteItem";
 
 import { SiBookstack } from "react-icons/si";

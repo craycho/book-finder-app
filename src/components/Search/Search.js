@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Context as BooksContext } from "../context/books-context";
+import { Context as BooksContext } from "../../context/books-context";
 
 import styles from "./Search.module.css";
 

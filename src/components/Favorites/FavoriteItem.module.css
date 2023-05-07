@@ -47,34 +47,6 @@ img {
   grid-column-end: 2;
 }
 
-.favorites-icon {
-  position: absolute;
-  bottom: 1rem;
-  right: 1.2rem;
-
-  width: 40px;
-  height: 40px;
-  color: #ff844e;
-  transform: scale(1.25);
-  transition: all 0.1s ease;
-}
-
-.favorites-icon:hover {
-  cursor: pointer;
-  color: #55433c;
-  transform: scale(1.15);
-  transition-duration: 0.1s;
-}
-
-.favorites-icon:active {
-  transform: scale(0.85);
-  transition-duration: 0.5s;
-}
-
-.favorites-icon__clicked {
-  color: rgb(51, 36, 36);
-}
-
 @media only screen and (max-width: 980px) {
   .book {
     width: 90%;

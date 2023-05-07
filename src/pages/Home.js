@@ -4,10 +4,10 @@ import { useState, useEffect, useContext } from "react";
 import styles from "./Home.module.css";
 import logo from "../assets/logo_transparent.png";
 
-import SearchMenu from "../components/SearchMenu";
-import Search from "../components/Search";
-import BookInfo from "../components/BookInfo";
-import Favorites from "../components/Favorites";
+import SearchMenu from "../components/Search/SearchMenu";
+import Search from "../components/Search/Search";
+import SearchItem from "../components/SearchItem";
+import Favorites from "../components/Favorites/Favorites";
 import { Context as BooksContext } from "../context/books-context";
 
 let isInitial = true;
@@ -77,7 +77,7 @@ function Home() {
           <>
             <div className={styles.results}>
               {booksContext.displayedBooks.map((book) => (
-                <BookInfo
+                <SearchItem
                   key={book.id}
                   book={book}
                   booksState={booksContext.displayedBooks}

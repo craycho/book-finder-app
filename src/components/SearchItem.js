@@ -1,11 +1,9 @@
-import { useState } from "react";
-
-import styles from "./BookInfo.module.css";
+import styles from "./SearchItem.module.css";
 import noImage from "../assets/no-image-available.jpg";
-import FavoriteButton from "./FavoriteButton";
+import FavoriteButton from "./Favorites/FavoriteButton";
 
-function BookInfo(props) {
-  const { book, setBooksState } = props;
+function SearchItem(props) {
+  const { book } = props;
   const booksState = props.booksState || [];
 
   return (
@@ -35,13 +33,9 @@ function BookInfo(props) {
         <span className={styles.break} />
         {book.info?.subtitle || ""}
       </div>
-      <FavoriteButton
-        book={book}
-        booksState={booksState}
-        setBooksState={setBooksState}
-      />
+      <FavoriteButton book={book} />
     </div>
   );
 }
 
-export default BookInfo;
+export default SearchItem;
