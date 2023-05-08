@@ -7,6 +7,43 @@ import styles from "./Search.module.css";
 const API_KEY = "AIzaSyB6EzRjXUNpB23ivuekvxOAyzpnBu0aaRk";
 const URL = `https://www.googleapis.com/books/v1/volumes?&printType=books&key=${API_KEY}&q=`;
 
+function getSearchBy(searchMode) {
+  if (searchMode === "title") return "+intitle";
+  if (searchMode === "author") return "+inauthor";
+  return "+subject";
+}
+
+function mapResults(resItems, favorites) {
+  const bookResults = resItems.map((res) => {
+    for (const fav of favorites) {
+      if (fav.id === res.id) {
+        return {
+          id: res.id,
+          info: res.volumeInfo,
+          favorite: true,
+        };
+      }
+    }
+    // Else
+    return {
+      id: res.id,
+      info: res.volumeInfo,
+      favorite: false,
+    };
+  });
+
+  console.log("Desava se");
+  return bookResults;
+}
+
+function useBooksContext() {
+  const context = useContext(BooksContext);
+  if (context === undefined) {
+    throw new Error("useBooks must be used within a BooksProvider");
+  }
+  return context;
+}
+
 function Search(props) {
   const { searchMode, startIndex, setStartIndex } = props;
   const isMounted = useRef(false);
@@ -14,25 +51,20 @@ function Search(props) {
   const [searchQuery, setSearchQuery] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const booksContext = useContext(BooksContext);
+  const booksContext = useRef(useBooksContext());
+  console.log(booksContext);
 
   useEffect(() => {
     if (isMounted.current) {
-      const searchBy =
-        searchMode === "title"
-          ? "+intitle"
-          : searchMode === "author"
-          ? "+inauthor"
-          : "+subject";
-
+      const searchBy = getSearchBy(searchMode);
       const url = searchMode
-        ? `${URL}${searchBy}:${searchQuery}`
-        : URL + searchQuery;
+        ? `${URL}${searchBy}:${searchQuery}&startIndex=${startIndex}`
+        : `${URL}${searchQuery}&startIndex=${startIndex}`;
 
       const searchBooks = async function () {
         try {
           setIsLoading(true);
-          const response = await fetch(url + `&startIndex=${startIndex}`);
+          const response = await fetch(url);
           const resData = await response.json();
 
           // Displaying results
@@ -41,32 +73,22 @@ function Search(props) {
             scrollTarget.scrollIntoView({ behavior: "smooth" });
           }, 100);
 
-          // Checks if any results are in the favorites array
-          const bookResults = resData.items.map((res) => {
-            for (const fav of booksContext.favorites) {
-              if (fav.id === res.id) {
-                return {
-                  id: res.id,
-                  info: res.volumeInfo,
-                  favorite: true,
-                };
-              }
-            }
-            // Else
-            return {
-              id: res.id,
-              info: res.volumeInfo,
-              favorite: false,
-            };
-          });
+          // Checks if any of the results are in the favorites array
+          if (resData.items !== undefined) {
+            const bookResults = mapResults(
+              resData.items,
+              booksContext.current.favorites
+            );
 
-          setError(null);
-          booksContext.changeDisplayedBooks([...bookResults]);
-          setIsLoading(false);
+            setError(null);
+            booksContext.current.changeDisplayedBooks([...bookResults]);
+            setIsLoading(false);
+          } else {
+            setIsLoading(false);
+            setError(`No results found for ${searchQuery}...`);
+          }
         } catch (error) {
-          setIsLoading(false);
-          setError(`No results found for ${searchQuery}...`);
-          throw new Error(`No results found for ${searchQuery}...`);
+          console.log(`Something went wrong! ${error.name}: ${error.message}`);
         }
       };
 
@@ -74,7 +96,7 @@ function Search(props) {
     } else {
       isMounted.current = true;
     }
-  }, [searchQuery, searchMode, isMounted, startIndex]);
+  }, [searchQuery, searchMode, isMounted, startIndex, booksContext]);
 
   function submitHandler(event) {
     event.preventDefault();
@@ -83,7 +105,7 @@ function Search(props) {
       return;
     }
 
-    setStartIndex(0); // Svaki search ce poceti od prvog pagea
+    setStartIndex(0); // Every search is automatically set to the first page
     setSearchQuery(event.target["book-search"].value);
   }
 

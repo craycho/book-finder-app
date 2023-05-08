@@ -1,10 +1,9 @@
 import styles from "./SearchItem.module.css";
-import noImage from "../assets/no-image-available.jpg";
-import FavoriteButton from "./Favorites/FavoriteButton";
+import noImage from "../../assets/no-image-available.jpg";
+import FavoriteButton from "../Favorites/FavoriteButton";
 
 function SearchItem(props) {
   const { book } = props;
-  const booksState = props.booksState || [];
 
   return (
     <div className={styles.book}>
@@ -17,7 +16,7 @@ function SearchItem(props) {
         {book.info.title || "Untitled"}
       </a>
 
-      <a href={book.info.infoLink} rel="noopener" target="_blank">
+      <a href={book.info.infoLink} rel="noreferrer" target="_blank">
         <img
           src={book.info.imageLinks?.thumbnail || noImage}
           alt="book-cover"

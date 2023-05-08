@@ -12,6 +12,7 @@ function App() {
 }
 export default App;
 
+/**@todo Proper error handling inside Search.js (with response.ok) */
 /**@todo Favorites and X move with the favorite items, fix it */
 /**@todo Add an other books by this author feature */
 /**@todo Add proper folders for the components (npr. cart, layout, shop, UI) */

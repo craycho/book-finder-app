@@ -6,7 +6,7 @@ import logo from "../assets/logo_transparent.png";
 
 import SearchMenu from "../components/Search/SearchMenu";
 import Search from "../components/Search/Search";
-import SearchItem from "../components/SearchItem";
+import SearchItem from "../components/Search/SearchItem";
 import Favorites from "../components/Favorites/Favorites";
 import { Context as BooksContext } from "../context/books-context";
 
@@ -19,8 +19,8 @@ function Home() {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  // Checks if search params exist/runs when they're changed
   useEffect(() => {
-    // Checks if params exist/runs when changed
     if (isInitial) {
       isInitial = false;
       setSearchParams(""); // Removes searchParams on page reload
@@ -77,12 +77,7 @@ function Home() {
           <>
             <div className={styles.results}>
               {booksContext.displayedBooks.map((book) => (
-                <SearchItem
-                  key={book.id}
-                  book={book}
-                  booksState={booksContext.displayedBooks}
-                  setBooksState={booksContext.changeDisplayedBooks}
-                />
+                <SearchItem key={book.id} book={book} />
               ))}
             </div>
             <button className={styles["btn-load"]} onClick={startIndexHandler}>
