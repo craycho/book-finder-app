@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { Context as BooksContext } from "../../context/books-context";
 
 import styles from "./Search.module.css";
@@ -38,27 +37,27 @@ function setFavorites(resItems, favorites) {
 function useBooksContext() {
   const context = useContext(BooksContext);
   if (context === undefined) {
-    throw new Error("useBooks must be used within a BooksProvider");
+    throw new Error("BooksContext must be used within a BooksContextProvider");
   }
   return context;
 }
 
 function Search(props) {
-  const { searchMode, startIndex, setStartIndex } = props;
-  const isMounted = useRef(false);
+  const { searchMode, setSearchMode, startIndex, setStartIndex } = props;
+  const searchInit = useRef(false);
 
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const booksContext = useRef(useBooksContext());
 
-  useEffect(() => {
-    if (isMounted.current) {
-      const searchBy = getSearchBy(searchMode);
-      const url = searchMode
-        ? `${URL}${searchBy}:${searchQuery}&startIndex=${startIndex}`
-        : `${URL}${searchQuery}&startIndex=${startIndex}`;
+  const searchBy = getSearchBy(searchMode);
+  const url = searchMode
+    ? `${URL}${searchBy}:${searchTerm}&startIndex=${startIndex}`
+    : `${URL}${searchTerm}&startIndex=${startIndex}`;
 
+  useEffect(() => {
+    if (searchInit.current) {
       const searchBooks = async function () {
         try {
           setIsLoading(true);
@@ -82,7 +81,7 @@ function Search(props) {
             setIsLoading(false);
           } else {
             setIsLoading(false);
-            setError(`No results found for ${searchQuery}...`);
+            setError(`No results found for ${searchTerm}...`);
           }
         } catch (error) {
           console.log(`Something went wrong! ${error.name}: ${error.message}`);
@@ -91,9 +90,10 @@ function Search(props) {
 
       searchBooks();
     } else {
-      isMounted.current = true;
+      searchInit.current = true;
+      setStartIndex(0);
     }
-  }, [searchQuery, searchMode, isMounted, startIndex, booksContext]);
+  }, [searchInit, url, booksContext, searchTerm, setStartIndex]);
 
   function submitHandler(event) {
     event.preventDefault();
@@ -103,7 +103,7 @@ function Search(props) {
     }
 
     setStartIndex(0); // Every search is automatically set to the first page
-    setSearchQuery(event.target["book-search"].value);
+    setSearchTerm(event.target["book-search"].value);
   }
 
   return (
@@ -124,9 +124,12 @@ function Search(props) {
         />
       </form>
       {searchMode && (
-        <Link to="/" relative="route">
-          <button className={styles["btn-back"]}>← Back</button>
-        </Link>
+        <button
+          className={styles["btn-back"]}
+          onClick={() => setSearchMode("")}
+        >
+          ← Back
+        </button>
       )}
       {isLoading && <span className={styles.loader}></span>}
       {error && <p className={styles.error}>{error}</p>}

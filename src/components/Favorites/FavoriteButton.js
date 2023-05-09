@@ -12,22 +12,25 @@ function FavoriteButton(props) {
     text: "",
     success: undefined,
   });
-  const booksContext = useContext(BooksContext);
-  const displayedBooks = booksContext.displayedBooks || [];
+  const {
+    favorites,
+    addFavorite,
+    removeFavorite,
+    displayedBooks,
+    changeDisplayedBooks,
+  } = useContext(BooksContext);
 
   const setFavoriteHandler = () => {
-    const alreadyFavorited = booksContext.favorites.some(
-      (fav) => fav.id === book.id
-    );
+    const alreadyFavorited = favorites.some((fav) => fav.id === book.id);
 
     if (alreadyFavorited) {
-      booksContext.removeFavorite(book);
+      removeFavorite(book);
       const favorites = JSON.parse(localStorage.getItem("favorites"));
       const newFavorites = favorites.filter((fav) => fav.id !== book.id);
       localStorage.setItem("favorites", JSON.stringify(newFavorites));
 
       const newBooks = setFavoriteProp(displayedBooks, book);
-      booksContext.changeDisplayedBooks(newBooks);
+      changeDisplayedBooks(newBooks);
 
       setNotification({
         visible: true,
@@ -45,7 +48,7 @@ function FavoriteButton(props) {
       });
 
       // Add favorite book to context
-      booksContext.addFavorite({ ...book, favorite: true });
+      addFavorite({ ...book, favorite: true });
 
       // Add favorite book to local storage
       const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -58,7 +61,7 @@ function FavoriteButton(props) {
 
       // Changes "favorite" property in the state of the currently displayed book
       const newBooks = setFavoriteProp(displayedBooks, book);
-      booksContext.changeDisplayedBooks(newBooks);
+      changeDisplayedBooks(newBooks);
     }
   };
 

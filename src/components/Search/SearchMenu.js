@@ -1,18 +1,11 @@
-import { Link } from "react-router-dom";
 import styles from "./SearchMenu.module.css";
 
-function SearchMenu() {
+function SearchMenu({ onSearchBy }) {
   return (
     <ul className={styles["search-menu"]}>
-      <Link to={`?searchBy=title`}>
-        <li>Search by title</li>
-      </Link>
-      <Link to={`?searchBy=author`}>
-        <li>Search by author</li>
-      </Link>
-      <Link to={`?searchBy=subject`}>
-        <li>Search by subject</li>
-      </Link>
+      <li onClick={() => onSearchBy("title")}>Search by title</li>
+      <li onClick={() => onSearchBy("author")}>Search by author</li>
+      <li onClick={() => onSearchBy("subject")}>Search by subject</li>
     </ul>
   );
 }
