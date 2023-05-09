@@ -29,7 +29,7 @@ function Home() {
     }
 
     if ([...searchParams].length !== 0) {
-      setSearchMode(searchParams.get("search"));
+      setSearchMode(searchParams.get("searchBy"));
       setStartIndex(0);
     } else {
       setSearchMode(undefined);

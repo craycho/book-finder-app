@@ -13,7 +13,7 @@ function getSearchBy(searchMode) {
   return "+subject";
 }
 
-function mapResults(resItems, favorites) {
+function setFavorites(resItems, favorites) {
   const bookResults = resItems.map((res) => {
     for (const fav of favorites) {
       if (fav.id === res.id) {
@@ -32,7 +32,6 @@ function mapResults(resItems, favorites) {
     };
   });
 
-  console.log("Desava se");
   return bookResults;
 }
 
@@ -52,7 +51,6 @@ function Search(props) {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const booksContext = useRef(useBooksContext());
-  console.log(booksContext);
 
   useEffect(() => {
     if (isMounted.current) {
@@ -67,15 +65,14 @@ function Search(props) {
           const response = await fetch(url);
           const resData = await response.json();
 
-          // Displaying results
           setTimeout(() => {
             const scrollTarget = document.getElementById("scroll-target");
             scrollTarget.scrollIntoView({ behavior: "smooth" });
           }, 100);
 
-          // Checks if any of the results are in the favorites array
+          // Checks if any of the results are in the favorites array and updates them accordingly
           if (resData.items !== undefined) {
-            const bookResults = mapResults(
+            const bookResults = setFavorites(
               resData.items,
               booksContext.current.favorites
             );
