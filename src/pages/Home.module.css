@@ -1,3 +1,12 @@
+.hero-header {
+  position: relative;
+  background-image: url("../assets/hero-img.jpg");
+  background-size: cover;
+  height: 100vh;
+  overflow: auto;
+  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.55);
+}
+
 .logo {
   display: block;
   margin: -70px auto -80px auto;
@@ -33,35 +42,72 @@ h2 {
   text-shadow: 1.5px 1.5px #04040433;
 }
 
-.hero-header {
-  position: relative;
-  background-image: url("../assets/hero-img.jpg");
-  background-size: cover;
-  height: 100vh;
-  overflow: auto;
-  box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.55);
-}
-
-.btn-back {
+.spinner-results {
+  width: 35px;
+  height: 35px;
   display: block;
-  cursor: pointer;
-  font-weight: 500;
-  border-radius: 4px;
-  margin: 2rem auto;
-  padding: 0 16px;
-  color: #f5f5f5;
-  background: rgba(205, 182, 153, 0.868);
-  line-height: 1.15;
-  font-size: 1rem;
-  height: 48px;
-  text-decoration: none;
-  min-width: 64px;
-  border: none;
-  text-align: center;
+  margin: 5rem auto;
+
+  border-radius: 50%;
+  border-top: 3px solid #fff;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
 }
 
-.btn-back:hover {
-  background: rgb(195, 158, 116);
-  box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%),
-    0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+.error {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+
+  padding-left: 1rem;
+  padding-top: 2rem;
+  color: rgb(234, 234, 234);
+  -webkit-text-stroke: 0.2px rgb(23, 23, 23);
+}
+
+.btn-loadMore {
+  position: relative;
+  display: block;
+  margin: 0.5rem auto 2rem auto;
+
+  box-shadow: 1px 2px #00000049;
+  border-radius: 8px;
+  min-height: 4rem;
+  width: 65vmin;
+
+  cursor: pointer;
+  font-weight: 600;
+  color: rgba(14, 14, 14, 0.904);
+  transition: all 0.2s ease;
+}
+
+.btn-loadMore:hover {
+  transform: scale(1.02);
+}
+
+.spinner-loadMore {
+  position: absolute;
+  left: 214px; /* transform: translate broken, check why*/
+  top: -66px;
+  width: 35px;
+  height: 35px;
+  display: block;
+  margin: 5rem auto;
+
+  border-radius: 50%;
+  border-top: 3px solid #000000;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

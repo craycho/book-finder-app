@@ -3,8 +3,8 @@ import noImage from "../../assets/no-image-available.jpg";
 import FavoriteButton from "../Favorites/FavoriteButton";
 import RecommendAuthor from "../Recommend/RecommendAuthor";
 
-function SearchItem(props) {
-  const { book } = props;
+function SearchItem({ book }) {
+  const recommendAuthorHandler = () => {};
 
   return (
     <div className={styles.book}>
@@ -33,7 +33,9 @@ function SearchItem(props) {
         <span className={styles.break} />
         {book.info?.subtitle || ""}
       </div>
-      <RecommendAuthor />
+      <button className={styles["btn-author"]} onClick={recommendAuthorHandler}>
+        More by this author
+      </button>
       <FavoriteButton book={book} />
     </div>
   );

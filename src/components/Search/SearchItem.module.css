@@ -50,3 +50,21 @@
 .book img:hover {
   transform: scale(1.03);
 }
+
+.btn-author {
+  position: absolute;
+  left: 145px;
+  bottom: 25px;
+  background-color: rgba(255, 235, 209, 0.868);
+  border-radius: 6px;
+  cursor: pointer;
+  color: rgba(23, 23, 23, 0.797);
+  font-size: 15px;
+  font-weight: bold;
+
+  margin-left: 1.2rem;
+}
+
+.btn-author:hover {
+  background-color: rgba(225, 208, 186, 0.868);
+}

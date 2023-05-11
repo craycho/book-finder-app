@@ -6,15 +6,12 @@ import styles from "./SearchResults.module.css";
 
 function SearchResults(props) {
   const { displayedBooks } = useContext(BooksContext);
-  const [isLoading, setIsLoading] = useState(false);
 
-  // Scrolls to top whenever results change
+  // Scrolls to top whenever results are rendered
   useEffect(() => {
-    const scrollTimeout = setTimeout(() => {
-      const scrollTarget = document.getElementById("scroll-target");
-      scrollTarget.scrollIntoView({ behavior: "smooth" });
-      setIsLoading(false);
-    }, 200);
+    const scrollTarget = document.getElementById("scroll-target");
+    scrollTarget.scrollIntoView({ behavior: "smooth" });
+    props.setIsLoading(false);
   }, [displayedBooks]);
 
   return (
@@ -24,19 +21,6 @@ function SearchResults(props) {
           <SearchItem key={book.id} book={book} />
         ))}
       </div>
-      <button
-        className={styles["btn-load"]}
-        onClick={() => {
-          setIsLoading(true);
-          props.changeStartIndex();
-        }}
-      >
-        {isLoading ? (
-          <span className={styles.loader}></span>
-        ) : (
-          <p>Load more results...</p>
-        )}
-      </button>
     </>
   );
 }
