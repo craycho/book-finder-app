@@ -1,6 +1,7 @@
 import styles from "./SearchItem.module.css";
 import noImage from "../../assets/no-image-available.jpg";
 import FavoriteButton from "../Favorites/FavoriteButton";
+import RecommendAuthor from "../Recommend/RecommendAuthor";
 
 function SearchItem(props) {
   const { book } = props;
@@ -32,6 +33,7 @@ function SearchItem(props) {
         <span className={styles.break} />
         {book.info?.subtitle || ""}
       </div>
+      <RecommendAuthor />
       <FavoriteButton book={book} />
     </div>
   );

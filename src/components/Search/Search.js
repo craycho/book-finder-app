@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Context as BooksContext } from "../../context/books-context";
 
 import styles from "./Search.module.css";
+import { RxCross2 } from "react-icons/rx";
 
 const API_KEY = "AIzaSyB6EzRjXUNpB23ivuekvxOAyzpnBu0aaRk";
 const URL = `https://www.googleapis.com/books/v1/volumes?&printType=books&key=${API_KEY}&q=`;
@@ -44,7 +45,8 @@ function useBooksContext() {
 
 function Search(props) {
   const { searchMode, setSearchMode, startIndex, setStartIndex } = props;
-  const searchInit = useRef(false);
+  const searchInitialized = useRef(false);
+  const [currentInput, setCurrentInput] = useState("");
 
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
@@ -57,17 +59,12 @@ function Search(props) {
     : `${URL}${searchTerm}&startIndex=${startIndex}`;
 
   useEffect(() => {
-    if (searchInit.current) {
+    if (searchInitialized.current) {
       const searchBooks = async function () {
         try {
           setIsLoading(true);
           const response = await fetch(url);
           const resData = await response.json();
-
-          setTimeout(() => {
-            const scrollTarget = document.getElementById("scroll-target");
-            scrollTarget.scrollIntoView({ behavior: "smooth" });
-          }, 100);
 
           // Checks if any of the results are in the favorites array and updates them accordingly
           if (resData.items !== undefined) {
@@ -90,10 +87,10 @@ function Search(props) {
 
       searchBooks();
     } else {
-      searchInit.current = true;
+      searchInitialized.current = true;
       setStartIndex(0);
     }
-  }, [searchInit, url, booksContext, searchTerm, setStartIndex]);
+  }, [searchInitialized, url, booksContext, searchTerm, setStartIndex]);
 
   function submitHandler(event) {
     event.preventDefault();
@@ -109,19 +106,26 @@ function Search(props) {
   return (
     <div className={styles.search}>
       <form className={styles.form} onSubmit={submitHandler}>
-        <br />
         <input
           autoFocus
           autoComplete="off"
           type="search"
           name="book-search"
           id="book-search"
+          value={currentInput}
           placeholder={
             searchMode
               ? `Search by ${searchMode}...`
               : "Type the name of a book, author or subject..."
           }
+          onChange={(event) => setCurrentInput(event.target.value)}
         />
+        {currentInput && (
+          <RxCross2
+            className={styles["clear-icon"]}
+            onClick={() => setCurrentInput("")}
+          />
+        )}
       </form>
       {searchMode && (
         <button

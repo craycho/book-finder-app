@@ -8,6 +8,7 @@ import Search from "../components/Search/Search";
 import SearchItem from "../components/Search/SearchItem";
 import Favorites from "../components/Favorites/Favorites";
 import { Context as BooksContext } from "../context/books-context";
+import SearchResults from "../components/Search/SearchResults";
 
 function Home() {
   const booksContext = useContext(BooksContext);
@@ -16,8 +17,6 @@ function Home() {
 
   const startIndexHandler = () => {
     setStartIndex((prevIndex) => prevIndex + 10);
-    const scrollTarget = document.getElementById("scroll-target");
-    scrollTarget.scrollIntoView({ behavior: "smooth" });
   };
 
   const searchMenuHandler = (searchBy) => {
@@ -38,10 +37,12 @@ function Home() {
       />
       <h2 id="scroll-target">Search through millions of volumes</h2>
       {!searchBy && (
-        <Search startIndex={startIndex} setStartIndex={setStartIndex} />
+        <>
+          <Search startIndex={startIndex} setStartIndex={setStartIndex} />
+          <h2>Looking for something a little more specific?</h2>
+        </>
       )}
 
-      {!searchBy && <h2>Looking for something a little more specific?</h2>}
       {searchBy ? (
         <Search
           searchMode={searchBy}
@@ -54,16 +55,7 @@ function Home() {
       )}
 
       {booksContext.displayedBooks.length > 0 && (
-        <>
-          <div className={styles.results}>
-            {booksContext.displayedBooks.map((book) => (
-              <SearchItem key={book.id} book={book} />
-            ))}
-          </div>
-          <button className={styles["btn-load"]} onClick={startIndexHandler}>
-            Load more results...
-          </button>
-        </>
+        <SearchResults changeStartIndex={startIndexHandler} />
       )}
     </header>
   );
