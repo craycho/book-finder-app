@@ -1,18 +1,21 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Context as BooksContext } from "../../context/books-context";
 import SearchItem from "./SearchItem";
 
 import styles from "./SearchResults.module.css";
 
-function SearchResults(props) {
+function SearchResults({ setIsLoading, onRecommend, setSearchBy }) {
   const { displayedBooks } = useContext(BooksContext);
+  const firstBookId = displayedBooks[0].id;
+
+  console.log(displayedBooks);
 
   // Scrolls to top whenever results are rendered
   useEffect(() => {
     const scrollTarget = document.getElementById("scroll-target");
     scrollTarget.scrollIntoView({ behavior: "smooth" });
-    props.setIsLoading(false);
-  }, [displayedBooks[0].id]);
+    setIsLoading(false);
+  }, [firstBookId, setIsLoading]);
   /* Mali hack: Scrolla samo ako se promijeni ID property prve knjige, sto se desi samo 
   kada se searchaju nove knjige ili se loada novi page. Ne desava se ako se ijedna knjiga favoritea.*/
 
@@ -23,8 +26,8 @@ function SearchResults(props) {
           <SearchItem
             key={book.id}
             book={book}
-            onRecommend={props.onRecommend}
-            setSearchBy={props.setSearchBy}
+            onRecommend={onRecommend}
+            setSearchBy={setSearchBy}
           />
         ))}
       </div>

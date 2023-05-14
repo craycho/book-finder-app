@@ -1,17 +1,21 @@
 import styles from "./SearchItem.module.css";
 import noImage from "../../assets/no-image-available.jpg";
 import FavoriteButton from "../Favorites/FavoriteButton";
-import RecommendAuthor from "../Recommend/RecommendAuthor";
 
 function SearchItem({ book, onRecommend }) {
   const recommendAuthorHandler = () => {
-    // console.log(...book.info.authors);
-    onRecommend(...book.info.authors, "author");
+    const authors = book.info.authors
+      ? book.info.authors.join(", ")
+      : "Unknown";
+    console.log(authors);
+    onRecommend(authors, "author");
   };
 
   const recommendMoreHandler = () => {
-    // console.log(...book.info.categories);
-    onRecommend(...book.info.categories, "subject");
+    const categories = book.info.categories
+      ? [...book.info.categories]
+      : "Unknown";
+    onRecommend(categories, "subject");
   };
 
   return (

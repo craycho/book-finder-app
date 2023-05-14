@@ -1,6 +1,6 @@
 .hero-header {
   position: relative;
-  background-image: url("../assets/hero-img.jpg");
+  background-image: url("./assets/hero-img.jpg");
   background-size: cover;
   height: 100vh;
   overflow: auto;
@@ -17,16 +17,6 @@
 
 .logo:hover {
   cursor: pointer;
-}
-
-h1 {
-  margin: 0 auto;
-  padding-top: 5rem;
-
-  max-width: fit-content;
-  font-size: 3rem;
-  color: rgb(234, 234, 234);
-  -webkit-text-stroke: 1.5px rgb(23, 23, 23);
 }
 
 h2 {
@@ -61,10 +51,17 @@ h2 {
   align-items: center;
   justify-content: center;
 
-  padding-left: 1rem;
-  padding-top: 2rem;
+  padding: 2rem 0 1rem 0;
   color: rgb(234, 234, 234);
   -webkit-text-stroke: 0.2px rgb(23, 23, 23);
+}
+
+.showing-results {
+  height: 25px;
+  overflow: auto;
+  padding: 0;
+  margin-top: 2rem;
+  font-size: 1.1rem;
 }
 
 .btn-loadMore {

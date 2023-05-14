@@ -1,16 +1,24 @@
 import { useState, useContext } from "react";
 
-import styles from "./Home.module.css";
-import logo from "../assets/logo_transparent.png";
+import { Context as BooksContext } from "./context/books-context";
+import Favorites from "./components/Favorites/Favorites";
+import SearchMenu from "./components/Search/SearchMenu";
+import SearchBar from "./components/Search/SearchBar";
+import SearchResults from "./components/Search/SearchResults";
 
-import { Context as BooksContext } from "../context/books-context";
-import Favorites from "../components/Favorites/Favorites";
-import SearchMenu from "../components/Search/SearchMenu";
-import SearchBar from "../components/Search/SearchBar";
-import SearchResults from "../components/Search/SearchResults";
+import styles from "./Main.module.css";
+import logo from "./assets/logo_transparent.png";
 
 const API_KEY = "AIzaSyB6EzRjXUNpB23ivuekvxOAyzpnBu0aaRk";
-const URL = `https://www.googleapis.com/books/v1/volumes?&printType=books&key=${API_KEY}&q=`;
+const URL = `https://www.googleapis.com/books/v1/volumes?&printType=books&maxResults=20&key=${API_KEY}&q=`;
+
+/* function useBooksContext() {
+  const context = useContext(BooksContext);
+  if (context === undefined) {
+    throw new Error("BooksContext must be used within a BooksContextProvider");
+  }
+  return context;
+} */
 
 function getSearchBy(searchBy) {
   if (searchBy === "title") return "+intitle";
@@ -42,11 +50,12 @@ function setFavorites(resItems, favorites) {
 }
 
 // Possible with useState but unnecessary, not used outside of component
-let searchTerm = "";
 let startIndex = 0;
+let resultsFor = "";
 
-function Home() {
+function Main() {
   const booksContext = useContext(BooksContext);
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchBy, setSearchBy] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,9 +63,9 @@ function Home() {
   const fetchBooks = async function (
     searchTerm,
     startIndex = 0,
-    moreSearchBy = undefined
+    recommendBy = undefined
   ) {
-    const searchMode = getSearchBy(moreSearchBy ?? searchBy);
+    const searchMode = getSearchBy(recommendBy ?? searchBy);
     const url = searchMode
       ? `${URL}${searchMode}:${searchTerm}&startIndex=${startIndex}`
       : `${URL}${searchTerm}&startIndex=${startIndex}`;
@@ -67,7 +76,6 @@ function Home() {
       setIsLoading(true);
       const response = await fetch(url);
       const resData = await response.json();
-      console.log(resData);
 
       // Checks if any of the results are in the favorites array and updates them accordingly
       if (resData.items !== undefined) {
@@ -92,7 +100,7 @@ function Home() {
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
-    const newSearchTerm = event.target["book-search"].value;
+    const newSearchTerm = event.target["book-search"].value.trim();
 
     if (newSearchTerm === "") {
       setError("Search field can't be empty...");
@@ -100,21 +108,31 @@ function Home() {
     }
 
     fetchBooks(newSearchTerm);
-    searchTerm = newSearchTerm;
+    setSearchTerm(newSearchTerm);
     startIndex = 0;
+    resultsFor = newSearchTerm;
   };
 
-  const recommendHandler = (recommendSearchTerm, searchBy) => {
+  const recommendBooksHandler = (recommendSearchTerm, searchBy) => {
     setSearchBy(searchBy);
     fetchBooks(recommendSearchTerm, 0, searchBy);
 
-    searchTerm = recommendSearchTerm;
+    setSearchTerm(recommendSearchTerm);
     startIndex = 0;
+    resultsFor = recommendSearchTerm;
   };
 
   const loadMoreHandler = () => {
-    fetchBooks(searchTerm, startIndex + 10);
-    startIndex += 10;
+    fetchBooks(searchTerm, startIndex + 20);
+    startIndex += 20;
+  };
+
+  const clearAll = () => {
+    booksContext.changeDisplayedBooks([]);
+    setSearchTerm("");
+    setSearchBy("");
+    setError(null);
+    resultsFor = "";
   };
 
   return (
@@ -124,9 +142,7 @@ function Home() {
         src={logo}
         alt="Book result"
         className={styles.logo}
-        onClick={() => {
-          booksContext.changeDisplayedBooks([]);
-        }}
+        onClick={clearAll}
       />
       <h2 id="scroll-target">Search through millions of volumes</h2>
 
@@ -134,6 +150,8 @@ function Home() {
         <>
           <SearchBar
             formSubmitHandler={formSubmitHandler}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
             setError={setError}
           />
           <h2>Looking for something a little more specific?</h2>
@@ -142,6 +160,8 @@ function Home() {
       ) : (
         <SearchBar
           formSubmitHandler={formSubmitHandler}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
           searchBy={searchBy}
           setSearchBy={setSearchBy}
           setError={setError}
@@ -153,10 +173,21 @@ function Home() {
 
       {booksContext.displayedBooks.length > 0 && (
         <>
+          {!error && (
+            <h2
+              className={styles["showing-results"]}
+              style={{ marginTop: searchBy && "4.2rem" }}
+            >
+              Showing results for "{resultsFor}"
+            </h2>
+          )}
           <SearchResults
-            onRecommend={recommendHandler}
+            onRecommend={recommendBooksHandler}
             setIsLoading={setIsLoading}
           />
+          <h2 style={{ paddingTop: "1rem" }}>
+            Didn't find what you were looking for?
+          </h2>
           <button
             className={styles["btn-loadMore"]}
             onClick={() => {
@@ -176,6 +207,6 @@ function Home() {
   );
 }
 
-export default Home;
+export default Main;
 
 /**@todo Fix key bug when searching with more in genre */
