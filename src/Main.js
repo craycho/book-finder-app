@@ -27,7 +27,7 @@ function getSearchBy(searchBy) {
   return "";
 }
 
-function setFavorites(resItems, favorites) {
+function setFavoriteResults(resItems, favorites) {
   const bookResults = resItems.map((res) => {
     for (const fav of favorites) {
       if (fav.id === res.id) {
@@ -79,7 +79,10 @@ function Main() {
 
       // Checks if any of the results are in the favorites array and updates them accordingly
       if (resData.items !== undefined) {
-        const bookResults = setFavorites(resData.items, booksContext.favorites);
+        const bookResults = setFavoriteResults(
+          resData.items,
+          booksContext.favorites
+        );
 
         setError(null);
         booksContext.changeDisplayedBooks([...bookResults]);

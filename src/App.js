@@ -9,6 +9,7 @@ function App() {
 }
 export default App;
 
+/**@todo Consider not allowing recommend feature with unknown fields */
 /**@todo Proper error handling inside Search.js (with response.ok) */
 /**@todo Favorites and X move with the favorite items, fix it */
 /**@todo Fix CSS and remove unnecessary classes for Favorites modal */
