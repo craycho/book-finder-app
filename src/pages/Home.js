@@ -3,11 +3,10 @@ import { useState, useContext } from "react";
 import styles from "./Home.module.css";
 import logo from "../assets/logo_transparent.png";
 
+import { Context as BooksContext } from "../context/books-context";
+import Favorites from "../components/Favorites/Favorites";
 import SearchMenu from "../components/Search/SearchMenu";
 import SearchBar from "../components/Search/SearchBar";
-import SearchItem from "../components/Search/SearchItem";
-import Favorites from "../components/Favorites/Favorites";
-import { Context as BooksContext } from "../context/books-context";
 import SearchResults from "../components/Search/SearchResults";
 
 const API_KEY = "AIzaSyB6EzRjXUNpB23ivuekvxOAyzpnBu0aaRk";
@@ -51,8 +50,6 @@ function Home() {
   const [searchBy, setSearchBy] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  // For the load more results feature
 
   const fetchBooks = async function (searchTerm, startIndex = 0) {
     const searchMode = getSearchBy(searchBy);

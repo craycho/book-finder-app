@@ -5,6 +5,7 @@ import RecommendAuthor from "../Recommend/RecommendAuthor";
 
 function SearchItem({ book }) {
   const recommendAuthorHandler = () => {};
+  console.log(book);
 
   return (
     <div className={styles.book}>
@@ -24,18 +25,29 @@ function SearchItem({ book }) {
         />
       </a>
       <div className={styles["book-description"]}>
-        <b>Author:</b>{" "}
+        <b>Author: </b>
         {book.info.authors?.length > 0
-          ? book.info.authors.join(" ")
-          : "Unknown"}{" "}
-        <span className={styles.break} /> <b>Published:</b>{" "}
+          ? book.info.authors.join(", ")
+          : "Unknown"}
+        <span className={styles.break} /> <b>Published: </b>
         {book.info?.publishedDate || "Unknown"}
         <span className={styles.break} />
-        {book.info?.subtitle || ""}
+        <p className={styles.subtitle}>{book.info?.subtitle || ""}</p>
       </div>
-      <button className={styles["btn-author"]} onClick={recommendAuthorHandler}>
-        More by this author
-      </button>
+      <div className={styles["recommend-buttons"]}>
+        <button
+          className={styles["btn-author"]}
+          onClick={recommendAuthorHandler}
+        >
+          More by this author
+        </button>
+        <button
+          className={styles["btn-recommend"]}
+          onClick={recommendAuthorHandler}
+        >
+          More books like this
+        </button>
+      </div>
       <FavoriteButton book={book} />
     </div>
   );

@@ -12,7 +12,9 @@ function SearchResults(props) {
     const scrollTarget = document.getElementById("scroll-target");
     scrollTarget.scrollIntoView({ behavior: "smooth" });
     props.setIsLoading(false);
-  }, [displayedBooks]);
+  }, [displayedBooks[0].id]);
+  /* Mali hack: Scrolla samo ako se promijeni ID property prve knjige, sto se desi samo 
+  kada se searchaju nove knjige ili se loada novi page. Ne desava se ako se ijedna knjiga favoritea.*/
 
   return (
     <>
