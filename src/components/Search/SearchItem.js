@@ -3,9 +3,16 @@ import noImage from "../../assets/no-image-available.jpg";
 import FavoriteButton from "../Favorites/FavoriteButton";
 import RecommendAuthor from "../Recommend/RecommendAuthor";
 
-function SearchItem({ book }) {
-  const recommendAuthorHandler = () => {};
-  console.log(book);
+function SearchItem({ book, onRecommend }) {
+  const recommendAuthorHandler = () => {
+    // console.log(...book.info.authors);
+    onRecommend(...book.info.authors, "author");
+  };
+
+  const recommendMoreHandler = () => {
+    // console.log(...book.info.categories);
+    onRecommend(...book.info.categories, "subject");
+  };
 
   return (
     <div className={styles.book}>
@@ -41,11 +48,8 @@ function SearchItem({ book }) {
         >
           More by this author
         </button>
-        <button
-          className={styles["btn-recommend"]}
-          onClick={recommendAuthorHandler}
-        >
-          More books like this
+        <button className={styles["btn-more"]} onClick={recommendMoreHandler}>
+          More in this genre
         </button>
       </div>
       <FavoriteButton book={book} />

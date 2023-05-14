@@ -20,7 +20,12 @@ function SearchResults(props) {
     <>
       <div className={styles.results}>
         {displayedBooks.map((book) => (
-          <SearchItem key={book.id} book={book} />
+          <SearchItem
+            key={book.id}
+            book={book}
+            onRecommend={props.onRecommend}
+            setSearchBy={props.setSearchBy}
+          />
         ))}
       </div>
     </>

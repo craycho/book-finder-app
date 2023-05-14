@@ -11,9 +11,8 @@ import { RxCross2 } from "react-icons/rx";
   return context;
 } */
 
-function SearchBar({ formSubmitHandler, searchBy, setSearchBy }) {
+function SearchBar({ formSubmitHandler, searchBy, setSearchBy, setError }) {
   const [currentInput, setCurrentInput] = useState("");
-
   return (
     <div className={styles.search}>
       <form className={styles.form} onSubmit={formSubmitHandler}>
@@ -34,7 +33,10 @@ function SearchBar({ formSubmitHandler, searchBy, setSearchBy }) {
         {currentInput && (
           <RxCross2
             className={styles["clear-icon"]}
-            onClick={() => setCurrentInput("")}
+            onClick={() => {
+              setCurrentInput("");
+              setError(null);
+            }}
           />
         )}
       </form>
@@ -48,9 +50,3 @@ function SearchBar({ formSubmitHandler, searchBy, setSearchBy }) {
 }
 
 export default SearchBar;
-
-/** @todo BONUS FEATURE: */
-/*
-  fetchanje pojedinacnog volumea (https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC?key=yourAPIKey) koji
-  izmedju ostalog ima i mainCategory i categories properties, koji se mogu koristiti za pretragu pomocu subject query stringa.
-  */

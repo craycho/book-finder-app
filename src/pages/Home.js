@@ -51,10 +51,14 @@ function Home() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchBooks = async function (searchTerm, startIndex = 0) {
-    const searchMode = getSearchBy(searchBy);
+  const fetchBooks = async function (
+    searchTerm,
+    startIndex = 0,
+    moreSearchBy = undefined
+  ) {
+    const searchMode = getSearchBy(moreSearchBy ?? searchBy);
     const url = searchMode
-      ? `${URL}${searchBy}:${searchTerm}&startIndex=${startIndex}`
+      ? `${URL}${searchMode}:${searchTerm}&startIndex=${startIndex}`
       : `${URL}${searchTerm}&startIndex=${startIndex}`;
 
     console.log(url);
@@ -63,6 +67,7 @@ function Home() {
       setIsLoading(true);
       const response = await fetch(url);
       const resData = await response.json();
+      console.log(resData);
 
       // Checks if any of the results are in the favorites array and updates them accordingly
       if (resData.items !== undefined) {
@@ -74,7 +79,11 @@ function Home() {
         return bookResults;
       } else {
         setIsLoading(false);
-        setError(`No results found for ${searchTerm}...`);
+        setError(
+          `No results found for ${searchTerm}${
+            searchBy && " in " + searchBy + "s"
+          }...`
+        );
       }
     } catch (error) {
       console.log(`Something went wrong! ${error.name}: ${error.message}`);
@@ -95,8 +104,15 @@ function Home() {
     startIndex = 0;
   };
 
+  const recommendHandler = (recommendSearchTerm, searchBy) => {
+    setSearchBy(searchBy);
+    fetchBooks(recommendSearchTerm, 0, searchBy);
+
+    searchTerm = recommendSearchTerm;
+    startIndex = 0;
+  };
+
   const loadMoreHandler = () => {
-    console.log(searchTerm);
     fetchBooks(searchTerm, startIndex + 10);
     startIndex += 10;
   };
@@ -117,17 +133,18 @@ function Home() {
       {!searchBy ? (
         <>
           <SearchBar
-            startIndex={startIndex}
             formSubmitHandler={formSubmitHandler}
+            setError={setError}
           />
           <h2>Looking for something a little more specific?</h2>
           <SearchMenu onSearchBy={setSearchBy} />
         </>
       ) : (
         <SearchBar
+          formSubmitHandler={formSubmitHandler}
           searchBy={searchBy}
           setSearchBy={setSearchBy}
-          formSubmitHandler={formSubmitHandler}
+          setError={setError}
         />
       )}
 
@@ -137,11 +154,8 @@ function Home() {
       {booksContext.displayedBooks.length > 0 && (
         <>
           <SearchResults
-            onLoadMoreResults={loadMoreHandler}
-            formSubmit={formSubmitHandler}
-            isLoading={isLoading}
+            onRecommend={recommendHandler}
             setIsLoading={setIsLoading}
-            error={error}
           />
           <button
             className={styles["btn-loadMore"]}
@@ -163,3 +177,5 @@ function Home() {
 }
 
 export default Home;
+
+/**@todo Fix key bug when searching with more in genre */
