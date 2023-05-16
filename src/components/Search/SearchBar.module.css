@@ -1,25 +1,34 @@
 .search {
   position: relative;
-
-  min-height: 3rem;
-  min-width: 450px;
-  width: 30%;
-  margin: 1rem auto 0 auto;
-}
-
-form {
-  padding: 0.6rem;
+  width: 35rem;
+  margin: 0 auto;
 }
 
 input {
-  min-height: 4rem;
-  min-width: 100%;
+  width: 100%;
+  height: 5.5rem;
+  padding: 5px 15px;
+  line-height: 20px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.3rem;
+  color: rgb(23, 23, 23);
+  vertical-align: middle;
+  background-color: #ffffff;
+  border: 1px solid #e1e4e8;
+  border-radius: 10px;
+  outline: none;
+  box-shadow: rgba(225, 228, 232, 0.2) 0px 1px 0px 0px inset;
+}
+
+/* input {
+  height: 4rem;
+  width: 100%;
   border-radius: 10px;
   padding: 0.5rem;
   font-size: 1rem;
   box-shadow: 2px 3px #00000049;
   border-color: rgba(23, 23, 23, 0.884);
-}
+} */
 
 ::-webkit-search-cancel-button {
   display: none;
@@ -27,18 +36,17 @@ input {
 
 .clear-icon {
   position: absolute;
-  right: 5%;
-  top: 30px; /* 50% + translate broken because of scale(1.15) */
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
 
-  font-size: 1.5rem;
-  color: rgb(120, 120, 120);
-  transition: transform 100ms linear;
+  font-size: 1.8rem;
+  color: rgb(112, 112, 112);
 }
 
 .clear-icon:hover {
   cursor: pointer;
-  color: rgb(69, 69, 69);
-  transform: scale(1.15);
+  color: rgb(65, 65, 65);
 }
 
 .btn-back {
@@ -47,17 +55,37 @@ input {
   display: block;
   cursor: pointer;
   color: rgba(23, 23, 23, 0.797);
-  font-size: 15px;
+  font-size: 1.2rem;
   font-weight: bold;
-  padding: 12px 24px;
+  padding: 15px 30px;
   text-decoration: none;
 
   margin-left: 1.2rem;
   position: absolute;
-  left: -8px;
-  top: 78px;
+  left: -12px;
+  top: 92px;
 }
 
 .btn-back:hover {
-  background-color: rgba(225, 208, 186, 0.868);
+  background-color: rgb(199, 180, 156);
+}
+
+@media only screen and (max-width: 481px) {
+  .search {
+    width: 90%;
+  }
+}
+
+@media (min-resolution: 120dpi) {
+  .search {
+    width: 30rem;
+  }
+
+  input {
+    height: 4.8rem;
+  }
+
+  .btn-back {
+    top: 82px;
+  }
 }

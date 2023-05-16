@@ -1,10 +1,10 @@
 .favorites-icon {
   position: absolute;
-  bottom: 1rem;
+  top: 1.5rem;
   right: 1.5rem;
 
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   color: #55433c;
   transition: all 0.1s ease;
 }
@@ -22,11 +22,11 @@
 
 .favorites-icon__favorited {
   position: absolute;
-  bottom: 1rem;
+  top: 1.5rem;
   right: 1.5rem;
 
-  width: 40px;
-  height: 40px;
+  width: 45px;
+  height: 45px;
   color: #ff844e;
   transform: scale(1.25);
   transition: all 0.1s ease;
@@ -44,8 +44,8 @@
 
 .added-notification {
   position: absolute;
-  bottom: 4.4rem;
-  right: 0.8rem;
+  top: 4.8rem;
+  right: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;

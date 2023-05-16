@@ -13,28 +13,32 @@ function BookInfo(props) {
     <>
       <div className={styles.wrapper} onClick={props.onWrapperClick}></div>
       <div className={styles["favorites-modal"]}>
-        <ImCross
-          className={styles["close-icon"]}
-          onClick={props.onWrapperClick}
-        />
+        <div className={styles["modal-header"]}>
+          <ImCross
+            className={styles["close-icon"]}
+            onClick={props.onWrapperClick}
+          />
+          <p className={styles.title}>Favorites</p>
+        </div>
 
-        {booksContext.favorites.length > 0 ? (
-          <>
-            <p className={styles.title}>Favorites</p>
-            {booksContext.favorites.map((fav) => (
-              <FavoriteItem key={fav.id} book={fav} />
-            ))}
-          </>
-        ) : (
-          <>
-            <p className={styles.empty}>No favorite books added!</p>
-            <p className={styles["empty-instruction"]}>
-              Try adding a favorite book by pressing the{" "}
-              <SiBookstack className={styles["empty-icon"]} /> icon next to any
-              search result.
-            </p>
-          </>
-        )}
+        <div className={styles["modal-results"]}>
+          {booksContext.favorites.length > 0 ? (
+            <>
+              {booksContext.favorites.map((fav) => (
+                <FavoriteItem key={fav.id} book={fav} />
+              ))}
+            </>
+          ) : (
+            <>
+              <p className={styles.empty}>No favorite books added!</p>
+              <p className={styles["empty-instruction"]}>
+                Try adding a favorite book by pressing the{" "}
+                <SiBookstack className={styles["empty-icon"]} /> icon next to
+                any search result.
+              </p>
+            </>
+          )}
+        </div>
       </div>
     </>
   );

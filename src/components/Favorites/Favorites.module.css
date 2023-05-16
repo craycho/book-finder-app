@@ -1,10 +1,10 @@
 .favorites-icon {
   position: fixed;
-  top: 2rem;
-  right: 3rem;
-
-  width: 45px;
-  height: 45px;
+  z-index: 1;
+  top: 3rem;
+  right: 3.5rem;
+  width: 60px;
+  height: 60px;
   color: rgb(234, 234, 234);
   transition: all 0.1s ease;
 }
@@ -12,7 +12,7 @@
 .favorites-icon:hover {
   cursor: pointer;
   fill: #e2b659;
-  transform: scale(1.2);
+  transform: scale(1.15);
 }
 
 .favorites-icon:active {
@@ -22,13 +22,13 @@
 
 .favorites-icon__clicked {
   position: fixed;
-  top: 2rem;
-  right: 3rem;
-  width: 45px;
-  height: 45px;
+  top: 3rem;
+  right: 3.5rem;
+  width: 60px;
+  height: 60px;
 
   color: #e2b659;
-  transform: scale(1.25);
+  transform: scale(1.2);
   transition: all 0.1s ease;
 }
 
@@ -36,10 +36,9 @@
   .favorites-icon {
     position: fixed;
     top: 2rem;
-    right: 2rem;
-
-    width: 40px;
-    height: 40px;
+    right: 2.5rem;
+    width: 50px;
+    height: 50px;
     color: rgb(234, 234, 234);
     transition: all 0.1s ease;
   }
@@ -47,12 +46,14 @@
   .favorites-icon__clicked {
     position: fixed;
     top: 2rem;
-    right: 2rem;
-    width: 40px;
-    height: 40px;
-
+    right: 1.5rem;
+    width: 50px;
+    height: 50px;
     color: #e2b659;
     transform: scale(1.25);
     transition: all 0.1s ease;
   }
+}
+
+@media only screen and (max-width: 481px) {
 }

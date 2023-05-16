@@ -7,18 +7,18 @@ import SearchBar from "./components/Search/SearchBar";
 import SearchResults from "./components/Search/SearchResults";
 
 import styles from "./Main.module.css";
-import logo from "./assets/logo_transparent.png";
+import logo from "./assets/logo_transparent_cropped.png";
 
 const API_KEY = "AIzaSyB6EzRjXUNpB23ivuekvxOAyzpnBu0aaRk";
 const URL = `https://www.googleapis.com/books/v1/volumes?&printType=books&maxResults=20&key=${API_KEY}&q=`;
 
-/* function useBooksContext() {
+function useBooksContext() {
   const context = useContext(BooksContext);
   if (context === undefined) {
-    throw new Error("BooksContext must be used within a BooksContextProvider");
+    throw new Error("Problem fetching BooksContext.");
   }
   return context;
-} */
+}
 
 function getSearchBy(searchBy) {
   if (searchBy === "title") return "+intitle";
@@ -54,7 +54,7 @@ let startIndex = 0;
 let resultsFor = "";
 
 function Main() {
-  const booksContext = useContext(BooksContext);
+  const booksContext = useBooksContext(BooksContext);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchBy, setSearchBy] = useState("");
   const [error, setError] = useState(null);
@@ -139,7 +139,7 @@ function Main() {
   };
 
   return (
-    <header className={styles["hero-header"]}>
+    <section className={styles["hero-section"]}>
       <Favorites />
       <img
         src={logo}
@@ -147,7 +147,9 @@ function Main() {
         className={styles.logo}
         onClick={clearAll}
       />
-      <h2 id="scroll-target">Search through millions of volumes</h2>
+      <h2 id="scroll-target" className={styles["search-introduction"]}>
+        Search through millions of volumes
+      </h2>
 
       {!searchBy ? (
         <>
@@ -157,7 +159,9 @@ function Main() {
             setSearchTerm={setSearchTerm}
             setError={setError}
           />
-          <h2>Looking for something a little more specific?</h2>
+          <h2 className={styles["looking-for-instruction"]}>
+            Looking for something a little more specific?
+          </h2>
           <SearchMenu onSearchBy={setSearchBy} />
         </>
       ) : (
@@ -179,7 +183,7 @@ function Main() {
           {!error && (
             <h2
               className={styles["showing-results"]}
-              style={{ marginTop: searchBy && "4.2rem" }}
+              style={{ marginTop: searchBy && "5.2rem" }}
             >
               Showing results for "{resultsFor}"
             </h2>
@@ -192,21 +196,21 @@ function Main() {
             Didn't find what you were looking for?
           </h2>
           <button
-            className={styles["btn-loadMore"]}
+            className={styles["btn-load"]}
             onClick={() => {
               setIsLoading(true);
               loadMoreHandler();
             }}
           >
             {isLoading ? (
-              <span className={styles["spinner-loadMore"]}></span>
+              <span className={styles["spinner-load"]}></span>
             ) : (
               <p>Load more results...</p>
             )}
           </button>
         </>
       )}
-    </header>
+    </section>
   );
 }
 
