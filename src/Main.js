@@ -49,6 +49,17 @@ function setFavoriteResults(resItems, favorites) {
   return bookResults;
 }
 
+function removeDuplicateResults(bookResults) {
+  const uniqueResults = bookResults.reduce((accumulator, currentBook) => {
+    if (!accumulator.find((accBook) => accBook.id === currentBook.id)) {
+      accumulator.push(currentBook);
+    }
+    return accumulator;
+  }, []);
+
+  return uniqueResults;
+}
+
 // Possible with useState but unnecessary, not used outside of component
 let startIndex = 0;
 let resultsFor = "";
@@ -84,8 +95,9 @@ function Main() {
           booksContext.favorites
         );
 
+        const uniqueResults = removeDuplicateResults(bookResults);
+        booksContext.changeDisplayedBooks([...uniqueResults]);
         setError(null);
-        booksContext.changeDisplayedBooks([...bookResults]);
         setIsLoading(false);
         return bookResults;
       } else {
@@ -117,10 +129,16 @@ function Main() {
   };
 
   const recommendBooksHandler = (recommendSearchTerm, searchBy) => {
+    if (recommendSearchTerm === searchTerm) {
+      const scrollTarget = document.getElementById("scroll-target");
+      scrollTarget.scrollIntoView({ behavior: "smooth" });
+      setError(`Already showing results for ${searchTerm}...`);
+      return;
+    }
     setSearchBy(searchBy);
     fetchBooks(recommendSearchTerm, 0, searchBy);
-
     setSearchTerm(recommendSearchTerm);
+
     startIndex = 0;
     resultsFor = recommendSearchTerm;
   };
@@ -140,7 +158,7 @@ function Main() {
 
   return (
     <section className={styles["hero-section"]}>
-      <Favorites />
+      <Favorites onRecommend={recommendBooksHandler} />
       <img
         src={logo}
         alt="Book result"
@@ -176,14 +194,18 @@ function Main() {
       )}
 
       {isLoading && <span className={styles["spinner-results"]}></span>}
-      {error && <p className={styles.error}>{error}</p>}
+      {error && (
+        <p className={styles.error} style={{ marginTop: searchBy && "4.5rem" }}>
+          {error}
+        </p>
+      )}
 
       {booksContext.displayedBooks.length > 0 && (
         <>
           {!error && (
             <h2
               className={styles["showing-results"]}
-              style={{ marginTop: searchBy && "5.2rem" }}
+              style={{ marginTop: searchBy && "6rem" }}
             >
               Showing results for "{resultsFor}"
             </h2>
@@ -205,7 +227,7 @@ function Main() {
             {isLoading ? (
               <span className={styles["spinner-load"]}></span>
             ) : (
-              <p>Load more results...</p>
+              "Load more results..."
             )}
           </button>
         </>
@@ -215,5 +237,3 @@ function Main() {
 }
 
 export default Main;
-
-/**@todo Fix key bug when searching with more in genre */

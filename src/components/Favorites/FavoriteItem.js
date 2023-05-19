@@ -1,23 +1,26 @@
-import { useContext } from "react";
-import { Context as BooksContext } from "../../context/books-context";
-import setFavoriteProp from "../../util/setFavoriteProp";
-
 import styles from "./FavoriteItem.module.css";
 import noImage from "../../assets/no-image-available.jpg";
 import FavoriteButton from "./FavoriteButton";
 
 function FavoriteItem(props) {
-  const { book } = props;
-  const booksContext = useContext(BooksContext);
+  const { book, onRecommend, isVisible, setIsVisible } = props;
 
-  const removeFavoriteHandler = () => {
-    booksContext.removeFavorite(book);
-    const newBooks = setFavoriteProp(booksContext.displayedBooks, book);
-    booksContext.changeDisplayedBooks(newBooks);
+  const recommendAuthorHandler = () => {
+    const authors = book.info.authors
+      ? book.info.authors.join(", ")
+      : "Unknown";
+    console.log(authors);
+    setIsVisible(false);
+    onRecommend(authors, "author");
+  };
 
-    const favorites = JSON.parse(localStorage.getItem("favorites"));
-    const newFavorites = favorites.filter((fav) => fav.id !== book.id);
-    localStorage.setItem("favorites", JSON.stringify(newFavorites));
+  const recommendMoreHandler = () => {
+    const categories = book.info.categories
+      ? book.info.categories.join(", ")
+      : "Unknown";
+    console.log(categories);
+    setIsVisible(false);
+    onRecommend(categories, "subject");
   };
 
   return (
@@ -45,6 +48,17 @@ function FavoriteItem(props) {
         {book.info?.publishedDate || "Unknown"}
         <span className={styles.break} />
         {book.info?.subtitle || ""}
+      </div>
+      <div className={styles["recommend-buttons"]}>
+        <button
+          className={styles["btn-author"]}
+          onClick={recommendAuthorHandler}
+        >
+          More by this author
+        </button>
+        <button className={styles["btn-more"]} onClick={recommendMoreHandler}>
+          More in this genre
+        </button>
       </div>
 
       <FavoriteButton book={book} />

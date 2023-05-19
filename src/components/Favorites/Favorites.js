@@ -4,7 +4,7 @@ import FavoritesModal from "./FavoritesModal";
 import { SiBookstack } from "react-icons/si";
 import styles from "./Favorites.module.css";
 
-function Favorites() {
+function Favorites(props) {
   const [isVisible, setIsVisible] = useState(false);
 
   const showFavoritesHandler = () => {
@@ -21,7 +21,14 @@ function Favorites() {
         }
         onClick={showFavoritesHandler}
       />
-      {isVisible && <FavoritesModal onWrapperClick={showFavoritesHandler} />}
+      {isVisible && (
+        <FavoritesModal
+          onWrapperClick={showFavoritesHandler}
+          onRecommend={props.onRecommend}
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+        />
+      )}
     </div>
   );
 }

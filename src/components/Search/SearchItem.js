@@ -13,7 +13,7 @@ function SearchItem({ book, onRecommend }) {
 
   const recommendMoreHandler = () => {
     const categories = book.info.categories
-      ? [...book.info.categories]
+      ? book.info.categories.join(", ")
       : "Unknown";
     onRecommend(categories, "subject");
   };

@@ -41,11 +41,44 @@
   margin-bottom: 0.3rem;
 }
 
-img {
+.book img {
   width: 128px;
   margin: 1rem 0 0.5rem 0.5rem;
   grid-column-start: 1;
   grid-column-end: 2;
+}
+
+.btn-author,
+.btn-more {
+  display: flex;
+  align-items: center;
+  position: absolute;
+
+  width: 20%;
+  min-width: 5rem;
+  height: 3rem;
+  font-size: 0.9rem;
+  background-color: rgba(255, 235, 209, 0.868);
+  border-radius: 5px;
+  cursor: pointer;
+  color: rgba(23, 23, 23, 0.797);
+  font-weight: bold;
+}
+
+.btn-author {
+  right: 1rem;
+  bottom: 1rem;
+}
+.btn-author:hover {
+  background-color: rgba(180, 161, 135, 0.868);
+}
+
+.btn-more {
+  right: 1rem;
+  bottom: 4.5rem;
+}
+.btn-more:hover {
+  background-color: rgba(180, 161, 135, 0.868);
 }
 
 @media only screen and (max-width: 980px) {
@@ -77,5 +110,10 @@ img {
 
   img {
     width: 105px;
+  }
+
+  .btn-more,
+  .btn-author {
+    width: 15%;
   }
 }

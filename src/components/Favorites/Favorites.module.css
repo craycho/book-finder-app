@@ -68,7 +68,7 @@
   }
 }
 
-@media only screen and (max-width: 630px) {
+@media only screen and (max-width: 480px) {
   .favorites-icon {
     /* stroke: #55433c; */
     stroke: rgb(36, 36, 36);

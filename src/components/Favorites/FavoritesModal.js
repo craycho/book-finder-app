@@ -26,7 +26,13 @@ function BookInfo(props) {
           {booksContext.favorites.length > 0 ? (
             <>
               {booksContext.favorites.map((fav) => (
-                <FavoriteItem key={fav.id} book={fav} />
+                <FavoriteItem
+                  key={fav.id}
+                  book={fav}
+                  onRecommend={props.onRecommend}
+                  isVisible={props.isVisible}
+                  setIsVisible={props.setIsVisible}
+                />
               ))}
             </>
           ) : (

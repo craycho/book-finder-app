@@ -17,7 +17,7 @@
 .book-title {
   text-decoration: none;
   color: rgb(23, 23, 23);
-  width: 85%;
+  width: 87%;
   font-weight: 600;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -59,14 +59,13 @@
   transform: scale(1.03);
 }
 
-.btn-author {
+.btn-author,
+.btn-more {
   display: flex;
   align-items: center;
   position: absolute;
-  right: 1rem;
-  bottom: 1rem;
-  width: 15%;
-  min-width: 5rem;
+
+  width: 5.5rem;
   height: 3rem;
   font-size: 0.9rem;
   background-color: rgba(255, 235, 209, 0.868);
@@ -76,34 +75,24 @@
   font-weight: bold;
 }
 
+.btn-author {
+  right: 1rem;
+  bottom: 1rem;
+}
 .btn-author:hover {
   background-color: rgba(180, 161, 135, 0.868);
 }
 
 .btn-more {
-  display: flex;
-  align-items: center;
-  position: absolute;
   right: 1rem;
   bottom: 4.5rem;
-  margin-left: 2rem;
-  width: 15%;
-  min-width: 5rem;
-  height: 3rem;
-  background-color: rgba(255, 235, 209, 0.868);
-  border-radius: 5px;
-  cursor: pointer;
-  color: rgba(23, 23, 23, 0.797);
-  font-size: 15px;
-  font-weight: bold;
 }
-
 .btn-more:hover {
   background-color: rgba(180, 161, 135, 0.868);
 }
 
 /* Custom size, purely for text overflow and favorites icon overlap issue */
-@media only screen and (max-width: 1380px) {
+@media only screen and (max-width: 1400px) {
   .book {
     width: 80%;
   }
@@ -128,7 +117,7 @@
   }
 
   .book img {
-    width: 105px;
+    width: 95px;
   }
 
   .book-description {
@@ -138,6 +127,7 @@
   .btn-more,
   .btn-author {
     font-size: 0.8rem;
+    width: 4rem;
   }
 }
 
@@ -147,7 +137,7 @@
   }
 
   .book-description {
-    width: 65%;
+    width: 70%;
     height: 4.5rem;
     margin-top: 0.4rem;
     margin-left: 0.6rem;
@@ -155,13 +145,13 @@
 
   .btn-more {
     top: 5rem;
-    min-width: 4.5rem;
-    padding: 0.2rem;
+    width: 4rem;
+    height: 3.5rem;
   }
 
   .btn-author {
-    top: 8.5rem;
-    min-width: 4.5rem;
-    padding: 0.2rem;
+    top: 9rem;
+    width: 4rem;
+    height: 3.5rem;
   }
 }

@@ -78,7 +78,6 @@
   transform: perspective(100px) translateZ(15px);
 }
 
-/* Modal content */
 .empty {
   text-align: center;
   font-size: 1.6rem;
@@ -100,8 +99,10 @@
 }
 
 .empty-icon {
-  vertical-align: -13%;
+  vertical-align: -20%;
   fill: brown;
+  font-size: 1.8rem;
+  margin: 0 0.2rem;
 }
 
 @media only screen and (max-width: 980px) {
