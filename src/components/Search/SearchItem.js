@@ -7,7 +7,7 @@ function SearchItem({ book, onRecommend }) {
     const authors = book.info.authors
       ? book.info.authors.join(", ")
       : "Unknown";
-    console.log(authors);
+    // console.log(authors);
     onRecommend(authors, "author");
   };
 

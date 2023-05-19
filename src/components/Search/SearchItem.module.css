@@ -5,19 +5,13 @@
 
   padding: 0.8rem 0.5rem;
   margin: 0.5rem 0;
-  width: 38%;
+  width: 40%;
   min-height: 15rem;
   font-size: 1.1rem;
   border: 2px solid #232323;
   border-radius: 10px;
   background-color: rgba(255, 235, 209, 0.95);
   box-shadow: 1px 1px rgba(0, 0, 0, 0.3);
-}
-
-@media only screen and (max-width: 980px) {
-  .book {
-    width: 90%;
-  }
 }
 
 .book-title {
@@ -35,9 +29,7 @@
 
 .book-description {
   margin: 1.3rem 0 0 1.2rem;
-  width: 60%;
-  min-height: fit-content;
-  max-height: 20vmin;
+  width: 55%;
   overflow: auto;
 }
 
@@ -74,13 +66,13 @@
   right: 1rem;
   bottom: 1rem;
   width: 15%;
+  min-width: 5rem;
   height: 3rem;
-  font-size: 1.3rem;
+  font-size: 0.9rem;
   background-color: rgba(255, 235, 209, 0.868);
   border-radius: 5px;
   cursor: pointer;
   color: rgba(23, 23, 23, 0.797);
-  font-size: 15px;
   font-weight: bold;
 }
 
@@ -96,6 +88,7 @@
   bottom: 4.5rem;
   margin-left: 2rem;
   width: 15%;
+  min-width: 5rem;
   height: 3rem;
   background-color: rgba(255, 235, 209, 0.868);
   border-radius: 5px;
@@ -109,111 +102,66 @@
   background-color: rgba(180, 161, 135, 0.868);
 }
 
-@media only screen and (max-width: 980px) {
-}
-
-/* 
-.book {
-  padding: 1rem 0.8rem 0.2rem 0.8rem;
-  margin: 0.6rem 0;
-  width: 38%;
-  font-size: 1.1rem;
-  border: 2px solid #232323;
-  border-radius: 10px;
-  background-color: rgba(255, 235, 209, 0.95);
-  box-shadow: 1px 1px rgba(0, 0, 0, 0.3);
+/* Custom size, purely for text overflow and favorites icon overlap issue */
+@media only screen and (max-width: 1380px) {
+  .book {
+    width: 80%;
+  }
 }
 
 @media only screen and (max-width: 980px) {
   .book {
+    width: 90%;
+  }
+
+  .btn-author,
+  .btn-more {
+    height: 3rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .book {
     width: 85%;
+    min-height: 13rem;
+    font-size: 1rem;
   }
-}
 
-.book-body {
-  display: flex;
-}
+  .book img {
+    width: 105px;
+  }
 
-.book-title {
-  text-decoration: none;
-  color: rgb(23, 23, 23);
-  width: fit-content;
-  max-width: 90%;
-  font-weight: 600;
-  margin: 0 0.5rem;
-}
+  .book-description {
+    width: 45%;
+  }
 
-.book-title:hover {
-  color: rgb(219, 58, 0);
-}
-
-.book-description {
-  margin: 1.3rem 0 0 1.2rem;
-  width: 70%;
-  min-height: fit-content;
-  max-height: 20vmin;
-  overflow: hidden;
-}
-
-.subtitle {
-  margin-top: 0;
-  margin-bottom: 3rem;
-}
-
-.break {
-  display: block;
-  margin-bottom: 0.3rem;
-}
-
-.book img {
-  transition: all 0.1s ease-in;
-  object-fit: contain;
-}
-
-.book img:hover {
-  transform: scale(1.03);
-}
-
-.btn-author {
-  position: absolute;
-  left: 14.5rem;
-  bottom: 1rem;
-  width: 18%;
-  height: 2.5rem;
-  background-color: rgba(255, 235, 209, 0.868);
-  border-radius: 5px;
-  cursor: pointer;
-  color: rgba(23, 23, 23, 0.797);
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-.btn-author:hover {
-  background-color: rgba(225, 208, 186, 0.868);
-}
-
-.btn-more {
-  position: absolute;
-  right: 10rem;
-  bottom: 1rem;
-  margin-left: 2rem;
-  width: 18%;
-  height: 2.5rem;
-  background-color: rgba(255, 235, 209, 0.868);
-  border-radius: 5px;
-  cursor: pointer;
-  color: rgba(23, 23, 23, 0.797);
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-.btn-more:hover {
-  background-color: rgba(225, 208, 186, 0.868);
-}
-
-@media only screen and (max-width: 980px) {
+  .btn-more,
   .btn-author {
-    left: 12rem;
+    font-size: 0.8rem;
   }
 }
- */
+
+@media only screen and (max-width: 480px) {
+  .book-title {
+    width: 72%;
+  }
+
+  .book-description {
+    width: 65%;
+    height: 4.5rem;
+    margin-top: 0.4rem;
+    margin-left: 0.6rem;
+  }
+
+  .btn-more {
+    top: 5rem;
+    min-width: 4.5rem;
+    padding: 0.2rem;
+  }
+
+  .btn-author {
+    top: 8.5rem;
+    min-width: 4.5rem;
+    padding: 0.2rem;
+  }
+}

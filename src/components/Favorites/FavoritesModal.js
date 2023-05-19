@@ -12,16 +12,17 @@ function BookInfo(props) {
   return (
     <>
       <div className={styles.wrapper} onClick={props.onWrapperClick}></div>
-      <div className={styles["favorites-modal"]}>
-        <div className={styles["modal-header"]}>
-          <ImCross
-            className={styles["close-icon"]}
-            onClick={props.onWrapperClick}
-          />
+      <div className={styles["favorites-header"]}>
+        {booksContext.favorites.length > 0 && (
           <p className={styles.title}>Favorites</p>
-        </div>
-
-        <div className={styles["modal-results"]}>
+        )}
+        <ImCross
+          className={styles["close-icon"]}
+          onClick={props.onWrapperClick}
+        />
+      </div>
+      <div className={styles["favorites-modal"]}>
+        <div className={styles["favorites-container"]}>
           {booksContext.favorites.length > 0 ? (
             <>
               {booksContext.favorites.map((fav) => (

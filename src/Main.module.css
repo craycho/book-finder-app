@@ -114,18 +114,8 @@ h2 {
   }
 }
 
-@media only screen and (max-width: 481px) {
-  .logo {
-    width: 90%;
-  }
-}
-
-@media only screen and (max-width: 980px) {
-  .logo {
-    width: 550px;
-  }
-}
-
+/* Separate media query for the default 125% zoom option on most laptops,
+  since 1024px doesn't work as intended. */
 @media (min-resolution: 120dpi) {
   h2 {
     font-size: 1.1rem;
@@ -149,5 +139,34 @@ h2 {
   .looking-for-instruction {
     margin-top: 2.5rem;
     margin-bottom: 2rem;
+  }
+}
+
+@media only screen and (max-width: 980px) {
+  .logo {
+    width: 550px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .logo {
+    width: 75%;
+    padding-top: 75px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .logo {
+    width: 85%;
+    padding-top: 80px;
+  }
+
+  .search-introduction {
+    margin-top: 5rem;
+  }
+
+  .showing-results {
+    width: 80%;
+    text-align: center;
   }
 }

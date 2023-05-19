@@ -1,28 +1,24 @@
 .book {
   position: relative;
-  display: grid;
-  grid-template-columns: 135px 1fr;
+  display: flex;
+  flex-wrap: wrap;
 
   padding: 0.8rem 0.5rem;
-  margin: 0.5rem 0;
   width: 90%;
+  min-height: 15rem;
+  font-size: 1.1rem;
   border: 2px solid #232323;
   border-radius: 10px;
-  background-color: rgb(255, 235, 209);
+  background-color: rgba(255, 235, 209, 0.95);
+  box-shadow: 1px 1px rgba(0, 0, 0, 0.3);
 
   transition: opacity 2s ease-out;
-}
-
-@media only screen and (max-width: 980px) {
-  .book {
-    flex-wrap: wrap;
-  }
 }
 
 .book-title {
   text-decoration: none;
   color: rgb(23, 23, 23);
-  width: 100%;
+  width: 85%;
   font-weight: 600;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -32,7 +28,12 @@
 
 .book-description {
   margin: 1.5rem 0 0 1.2rem;
-  max-width: 70%;
+  max-width: 55%;
+  overflow-y: scroll;
+}
+
+.book-description::-webkit-scrollbar {
+  display: none;
 }
 
 .break {
@@ -50,5 +51,31 @@ img {
 @media only screen and (max-width: 980px) {
   .book {
     width: 90%;
+  }
+
+  .book-description {
+    max-width: 90%;
+    width: 90%;
+    height: 4.5rem;
+    margin-top: 0.4rem;
+    margin-left: 0.6rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .book {
+    font-size: 1rem;
+  }
+
+  .book-title {
+    width: 75%;
+  }
+
+  .book-description {
+    height: 4rem;
+  }
+
+  img {
+    width: 105px;
   }
 }

@@ -20,16 +20,6 @@ input {
   box-shadow: rgba(225, 228, 232, 0.2) 0px 1px 0px 0px inset;
 }
 
-/* input {
-  height: 4rem;
-  width: 100%;
-  border-radius: 10px;
-  padding: 0.5rem;
-  font-size: 1rem;
-  box-shadow: 2px 3px #00000049;
-  border-color: rgba(23, 23, 23, 0.884);
-} */
-
 ::-webkit-search-cancel-button {
   display: none;
 }
@@ -70,12 +60,6 @@ input {
   background-color: rgb(199, 180, 156);
 }
 
-@media only screen and (max-width: 481px) {
-  .search {
-    width: 90%;
-  }
-}
-
 @media (min-resolution: 120dpi) {
   .search {
     width: 30rem;
@@ -87,5 +71,21 @@ input {
 
   .btn-back {
     top: 82px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .search {
+    width: 80%;
+  }
+  input {
+    height: 4.3rem;
+    font-size: 1.1rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .search {
+    width: 90%;
   }
 }
