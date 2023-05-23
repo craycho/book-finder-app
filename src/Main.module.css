@@ -1,6 +1,6 @@
 .hero-section {
   background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
-    url("./assets/hero-img.jpg");
+    url("./assets/hero-img-low-res.jpg");
   background-size: cover;
   height: 100vh;
   width: 100vw;
