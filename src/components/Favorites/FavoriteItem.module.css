@@ -28,7 +28,7 @@
 
 .book-description {
   margin: 1.5rem 0 0 1.2rem;
-  max-width: 55%;
+  max-width: 50%;
   overflow-y: scroll;
 }
 
@@ -54,8 +54,7 @@
   align-items: center;
   position: absolute;
 
-  width: 20%;
-  min-width: 5rem;
+  width: 5.5rem;
   height: 3rem;
   font-size: 0.9rem;
   background-color: rgba(255, 235, 209, 0.868);
@@ -93,6 +92,17 @@
     margin-top: 0.4rem;
     margin-left: 0.6rem;
   }
+
+  .btn-author,
+  .btn-more {
+    height: 3.3rem;
+  }
+  .btn-more {
+    top: 5.5rem;
+  }
+  .btn-author {
+    top: 9.5rem;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -106,14 +116,41 @@
 
   .book-description {
     height: 4rem;
+    width: 80%;
   }
 
-  img {
+  .book img {
     width: 105px;
   }
 
   .btn-more,
   .btn-author {
-    width: 15%;
+    width: 4rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .book-title {
+    width: 72%;
+  }
+
+  .book img {
+    width: 95px;
+  }
+
+  .book-description {
+    width: 70%;
+    height: 4.5rem;
+    margin-top: 0.4rem;
+    margin-left: 0.6rem;
+  }
+
+  .btn-more {
+    top: 5rem;
+  }
+
+  .btn-author {
+    top: 9rem;
   }
 }

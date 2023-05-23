@@ -105,7 +105,10 @@
 
   .btn-author,
   .btn-more {
-    height: 3rem;
+    height: 3.3rem;
+  }
+  .btn-more {
+    bottom: 4.7rem;
   }
 }
 
@@ -128,6 +131,7 @@
   .btn-author {
     font-size: 0.8rem;
     width: 4rem;
+    /* padding: 0.3rem 0; */
   }
 }
 
@@ -145,13 +149,11 @@
 
   .btn-more {
     top: 5rem;
-    width: 4rem;
     height: 3.5rem;
   }
 
   .btn-author {
     top: 9rem;
-    width: 4rem;
     height: 3.5rem;
   }
 }
