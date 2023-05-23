@@ -7,7 +7,6 @@ import styles from "./SearchResults.module.css";
 function SearchResults({ setIsLoading, onRecommend, setSearchBy }) {
   const { displayedBooks } = useContext(BooksContext);
   const firstBookId = displayedBooks[0].id;
-  // console.log(displayedBooks);
 
   // Scrolls to top whenever results are rendered
   useEffect(() => {

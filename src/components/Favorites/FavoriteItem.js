@@ -3,13 +3,13 @@ import noImage from "../../assets/no-image-available.jpg";
 import FavoriteButton from "./FavoriteButton";
 
 function FavoriteItem(props) {
-  const { book, onRecommend, isVisible, setIsVisible } = props;
+  const { book, onRecommend, setIsVisible } = props;
 
   const recommendAuthorHandler = () => {
     const authors = book.info.authors
       ? book.info.authors.join(", ")
       : "Unknown";
-    console.log(authors);
+
     setIsVisible(false);
     onRecommend(authors, "author");
   };
@@ -18,7 +18,7 @@ function FavoriteItem(props) {
     const categories = book.info.categories
       ? book.info.categories.join(", ")
       : "Unknown";
-    console.log(categories);
+
     setIsVisible(false);
     onRecommend(categories, "subject");
   };

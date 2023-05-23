@@ -81,7 +81,7 @@ function Main() {
       ? `${URL}${searchMode}:${searchTerm}&startIndex=${startIndex}`
       : `${URL}${searchTerm}&startIndex=${startIndex}`;
 
-    console.log(url);
+    // console.log(url);
 
     try {
       setIsLoading(true);
