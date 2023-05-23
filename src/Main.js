@@ -96,7 +96,15 @@ function Main() {
         );
 
         const uniqueResults = removeDuplicateResults(bookResults);
-        booksContext.changeDisplayedBooks([...uniqueResults]);
+        if (startIndex !== 0) {
+          console.log("Desilo se ");
+          booksContext.changeDisplayedBooks([
+            ...booksContext.displayedBooks,
+            ...uniqueResults,
+          ]);
+        } else {
+          booksContext.changeDisplayedBooks([...uniqueResults]);
+        }
         setError(null);
         setIsLoading(false);
         return bookResults;
