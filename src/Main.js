@@ -8,6 +8,7 @@ import SearchResults from "./components/Search/SearchResults";
 
 import styles from "./Main.module.css";
 import logo from "./assets/logo_transparent_cropped.png";
+import { BsFillArrowUpCircleFill } from "react-icons/bs";
 
 const API_KEY = "AIzaSyB6EzRjXUNpB23ivuekvxOAyzpnBu0aaRk";
 const URL = `https://www.googleapis.com/books/v1/volumes?&printType=books&maxResults=20&key=${API_KEY}&q=`;
@@ -27,7 +28,7 @@ function getSearchBy(searchBy) {
   return "";
 }
 
-function setFavoriteResults(resItems, favorites) {
+function setResultsFavoriteProp(resItems, favorites) {
   const bookResults = resItems.map((res) => {
     for (const fav of favorites) {
       if (fav.id === res.id) {
@@ -80,7 +81,6 @@ function Main() {
     const url = searchMode
       ? `${URL}${searchMode}:${searchTerm}&startIndex=${startIndex}`
       : `${URL}${searchTerm}&startIndex=${startIndex}`;
-
     // console.log(url);
 
     try {
@@ -88,26 +88,27 @@ function Main() {
       const response = await fetch(url);
       const resData = await response.json();
 
-      // Checks if any of the results are in the favorites array and updates them accordingly
       if (resData.items !== undefined) {
-        const bookResults = setFavoriteResults(
+        // Checks if any of the results are in the favorites array to update the favorite icon
+        const bookResults = setResultsFavoriteProp(
           resData.items,
           booksContext.favorites
         );
-
+        // Filters out duplicate results that occasionally occur due to Google Books API
         const uniqueResults = removeDuplicateResults(bookResults);
+        // If load more is clicked appends results to existing array
         if (startIndex !== 0) {
-          console.log("Desilo se ");
-          booksContext.changeDisplayedBooks([
+          const appendedResults = removeDuplicateResults([
             ...booksContext.displayedBooks,
             ...uniqueResults,
           ]);
+          booksContext.changeDisplayedBooks(appendedResults);
         } else {
           booksContext.changeDisplayedBooks([...uniqueResults]);
         }
+
         setError(null);
         setIsLoading(false);
-        return bookResults;
       } else {
         setIsLoading(false);
         setError(
@@ -170,6 +171,7 @@ function Main() {
       <img
         src={logo}
         alt="Book result"
+        id="to-top"
         className={styles.logo}
         onClick={clearAll}
       />
@@ -222,6 +224,14 @@ function Main() {
             onRecommend={recommendBooksHandler}
             setIsLoading={setIsLoading}
           />
+          <BsFillArrowUpCircleFill
+            className={styles["top-icon"]}
+            onClick={() => {
+              const scrollTarget = document.getElementById("to-top");
+              scrollTarget.scrollIntoView({ behavior: "smooth" });
+            }}
+          />
+
           <h2 style={{ paddingTop: "1rem" }}>
             Didn't find what you were looking for?
           </h2>

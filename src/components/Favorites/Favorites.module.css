@@ -70,8 +70,9 @@
 
 @media only screen and (max-width: 480px) {
   .favorites-icon {
-    /* stroke: #55433c; */
+    top: 1.2rem;
+    right: 1.2rem;
     stroke: rgb(36, 36, 36);
-    stroke-width: 0.5px;
+    stroke-width: 0.4px;
   }
 }
